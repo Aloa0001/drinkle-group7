@@ -28,7 +28,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     @FXML
     private VBox vBoxIngredients;
     @FXML
-    private Button btnSimilarProduct;
+    private Button btnSimilarProduct,btnSearch;
     @FXML
     private MenuButton menuBtnCategory, menuBtnBrand, menuBtnAlcoholOption;
     @FXML
@@ -59,19 +59,18 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         vBoxIngredients.getChildren().clear();
         String text = txtSearchOption.getText().toLowerCase();
         for (Ingredient x : ingredientsList) {
-            if (text.length() != 0) {
-                if (x.getName().toLowerCase().contains(text)) {
+            if (text.length() != 0&&x.getName().toLowerCase().contains(text)) {
                     Button button = new Button();
                     button.setOnAction(this::selectVbButton);
                     button.setMinWidth(400);
                     button.setMinHeight(40);
                     button.setText(x.getName());
                     vBoxIngredients.getChildren().add(button);
-                }
             }
         }
         menuBtnBrand.setText("Brand");
         menuBtnCategory.setText("Category");
+        btnSearch.setDisable(false);
     }
 
     @FXML
@@ -131,7 +130,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectVbButton(ActionEvent e) {
-
         try {
             Button selection = (Button) e.getSource();
             for (Ingredient x : ingredientsList) {
@@ -145,14 +143,13 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     lblIngredientBrand.setText(x.getBrand().getBrandName());
                     lblIngredientCategory.setText(x.getBrand().getProductType().getName());
                     for (Ingredient y : ingredientsList) {
-                        if (x.getBrand().getBrandName().equals(y.getBrand().getBrandName())) {
-                            if (!x.getName().equals(y.getName())) {
+                        if (x.getBrand().getProductType().getName().equals(y.getBrand().getProductType().getName())&&!x.getName().equals(y.getName())) {
                                 btnSimilarProduct.setText(y.getName());
-                            }
                         }
                     }
                 }
             }
+            txtSearchOption.setText(" ");
         } catch (Exception exc) {
             exc.printStackTrace();
         }
