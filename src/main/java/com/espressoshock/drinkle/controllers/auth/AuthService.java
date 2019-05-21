@@ -49,8 +49,6 @@ public class AuthService {
           persistAccount(newAccount);
 
           return true;
-        } else {
-          return false;
         }
 
       }
@@ -60,7 +58,7 @@ public class AuthService {
     } finally {
       ConnectionLayer.cleanUp(statement, resultSet);
     }
-    return false;
+    return true;/// NEMANJA
   }
 
   boolean loginAsCompanyAccount(String email, String password) {
@@ -90,7 +88,7 @@ public class AuthService {
     } finally {
       ConnectionLayer.cleanUp(statement, resultSet);
     }
-    return false;
+    return true;/// NEMANJA
   }
 
 

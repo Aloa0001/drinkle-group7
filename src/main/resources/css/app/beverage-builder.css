@@ -27,15 +27,39 @@
     -fx-background-radius: 0;
     -fx-border-radius: 0;
 }
-#alcoholPercentCircle, #pourCostCircle{
+#alcoholPercentCircle{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-fill: transparent;
 }
-#txtFieldCocktailName, #txtFieldNotes{
+#txtFieldBeverageName, #txtFieldNotes{
     -fx-background-color: transparent;
+    -fx-fill: transparent;
     -fx-text-fill: white;
 }
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: transparent ;
+    -fx-text-fill: white;
+}
+.text-area .scroll-pane .track{
+    -fx-background-color: transparent;
+    -fx-fill: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+.text-area .scroll-pane .viewport, .text-area .scroll-pane :vertical{
+    -fx-pref-width: 8;
+    -fx-background-color: transparent;
+}
+
+.progress-bar .bar {
+    -fx-background-color:
+            linear-gradient(to right, orange,white);
+
+}
+
+
+
 .progress-indicator .percentage {
     -fx-fill:null;
 }

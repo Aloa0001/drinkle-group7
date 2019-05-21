@@ -6,16 +6,26 @@ public class Beverage {
 
   private String name;
   private int alcoholPercentage;
-  private int cost;
-  private int volumePerMilliliter;
+  private double cost;
+  private int volumePerMililiter;
+  private String notes;
+
+  public String getNotes() {
+    return notes;
+  }
+
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
+
   private ArrayList<Ingredient> ingredients;
 
-  public Beverage(String name, int alcoholPercentage, int cost, int volumePerMilliliter,
-      ArrayList<Ingredient> ingredients) {
+  public Beverage(String name, int alcoholPercentage, double cost, int volumePerMililiter,
+                  ArrayList<Ingredient> ingredients) {
     this.name = name;
     this.alcoholPercentage = alcoholPercentage;
     this.cost = cost;
-    this.volumePerMilliliter = volumePerMilliliter;
+    this.volumePerMililiter = volumePerMililiter;
     this.ingredients = ingredients;
   }
 
@@ -35,20 +45,20 @@ public class Beverage {
     this.alcoholPercentage = alcoholPercentage;
   }
 
-  public int getCost() {
+  public double getCost() {
     return cost;
   }
 
-  public void setCost(int cost) {
+  public void setCost(double cost) {
     this.cost = cost;
   }
 
-  public int getVolumePerMilliliter() {
-    return volumePerMilliliter;
+  public int getVolumePerMililiter() {
+    return volumePerMililiter;
   }
 
-  public void setVolumePerMilliliter(int volumePerMilliliter) {
-    this.volumePerMilliliter = volumePerMilliliter;
+  public void setVolumePerMililiter(int volumePerMililiter) {
+    this.volumePerMililiter = volumePerMililiter;
   }
 
   public ArrayList<Ingredient> getIngredients() {

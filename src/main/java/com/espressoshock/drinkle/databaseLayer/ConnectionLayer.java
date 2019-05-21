@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class ConnectionLayer {
 
-  private static String url = "jdbc:mysql://den1.mysql6.gear.host/drinkleg7";
+  private static String url = "jdbc:mysql://den1.mysql6.gear.host/drinkleg7?allowMultiQueries=true";
   private static String username = "drinkleg7";
   private static String password = "drinkle.123";
   private static Connection connection;

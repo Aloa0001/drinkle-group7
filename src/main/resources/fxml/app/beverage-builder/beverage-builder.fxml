@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="935.0" styleClass="view-white-bg, view-page" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espressoshock.drinkle.controllers.app.beverageBuilder.BeverageBuilder">
+
+    <stylesheets>
+        <URL value="@../../../css/app/beverage-builder.css" />
+        <URL value="@../../../css/common.css" />
+    </stylesheets>
+    <children>
+        <SVGPath fx:id="highlight" blendMode="DARKEN" content="M46.380,7.500 C117.087,7.500 187.793,7.500 258.500,7.500 C258.500,232.167 258.500,456.833 258.500,681.500 C258.500,692.546 250.277,701.500 240.135,701.500 C175.550,701.500 110.965,701.500 46.380,701.500 C2.596,468.119 -12.939,237.371 46.380,7.500 Z" layoutX="678.0" layoutY="-7.0" scaleY="1.001" strokeLineCap="BUTT" />
+        <Group id="Cetner graphics/data" layoutX="292.0" layoutY="146.0">
+            <children>
+                <Group id="Chosen Ingredient" layoutX="102.0" layoutY="-46.0" />
+                <ImageView fx:id="glassImage" fitHeight="488.0" fitWidth="300.0" layoutX="-37.0" layoutY="-34.0">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                </ImageView>
+                <Group id="slider&amp;volume&amp;..." layoutX="329.0" layoutY="151.0">
+                    <children>
+                        <Group id="Volume (center)" layoutX="11.0" layoutY="-10.0" />
+                        <Slider fx:id="slider" blockIncrement="0.01" layoutX="-27.0" layoutY="-39.0" max="1.0" orientation="VERTICAL">
+                            <tooltip>
+                                <Tooltip text="Slide to adjust the volume of the ingredient." />
+                            </tooltip>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Slider>
+                        <ProgressBar fx:id="progressGlass" layoutX="-132.0" layoutY="5.0" prefHeight="54.0" prefWidth="140.0" progress="0.0" rotate="-90.0" />
+                        <VBox alignment="TOP_CENTER" layoutX="-9.0" layoutY="-23.0">
+                            <children>
+                                <Label fx:id="lblVolName" text="Volume" />
+                                <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="69.0">
+                                    <children>
+                                        <Label fx:id="lblVolume" text="0" />
+                                        <Label fx:id="lblVolumeUnit" text="ml" />
+                                        <Pane prefHeight="27.0" prefWidth="12.0" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="-6.0" layoutY="24.0" prefHeight="44.0" prefWidth="69.0">
+                            <children>
+                                <Label fx:id="lblCostName" text="Cost" />
+                                <HBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
+                                    <children>
+                                        <Label fx:id="lblCost" text="0.0" textAlignment="CENTER">
+                                            <HBox.margin>
+                                                <Insets />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label fx:id="lblCostValuta" text="€" />
+                                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="6.0" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </Group>
+                <Group layoutX="178.0" layoutY="-50.0">
+                    <children>
+                        <Label text="Total volume" />
+                        <Label fx:id="lblTotalVolume" layoutX="21.0" layoutY="15.0" text="0ml">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Group>
+                <Group layoutX="33.0" layoutY="-50.0">
+                    <children>
+                        <Label text="Chosen glass:" />
+                        <Label fx:id="lblChosenGlass" layoutX="3.0" layoutY="15.0" text="None">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Group>
+                <Button fx:id="btnAddIngredient" layoutX="240.0" layoutY="281.0" mnemonicParsing="false" onAction="#addIngredientWidget" prefHeight="65.0" prefWidth="141.0" text="Add ingredient" />
+                  <Label layoutX="275.0" layoutY="78.0" prefHeight="15.0" prefWidth="82.0" text="Move the slider " textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+            <Label layoutX="275.0" layoutY="93.0" prefHeight="15.0" prefWidth="105.0" text="to adjust the volume" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+            </children>
+        </Group>
+        <AnchorPane fx:id="ingredintListAnchorPane" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="268.0">
+            <children>
+                <ScrollPane id="list of the ingredients" fx:id="listOfIngredientsScrollPane" hbarPolicy="NEVER" layoutX="4.0" layoutY="60.0" prefHeight="633.0" prefWidth="260.0">
+                    <content>
+                        <VBox fx:id="vBoxListOfIngredients" prefHeight="625.0" prefWidth="242.0" />
+                    </content>
+                </ScrollPane>
+                <Separator layoutY="52.0" prefHeight="1.0" prefWidth="232.0" />
+                <Group id="search" layoutX="22.0" layoutY="22.0">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="20.0" layoutX="-16.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../images/app/beverage-builder/search.png" />
+                            </image>
+                        </ImageView>
+                        <TextField fx:id="searchField" layoutX="111.0" prefHeight="23.0" prefWidth="103.0" />
+                        <MenuButton fx:id="brandsList" layoutX="6.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="101.0" text="Chose brand" />
+                    </children>
+                </Group>
+            </children>
+        </AnchorPane>
+        <Group id="Alc%" layoutX="795.0" layoutY="145.0">
+            <children>
+                <Label layoutX="-1.0" text="Alcohol%" />
+                <AnchorPane fx:id="alcoholPercentCircle" layoutX="-31.0" layoutY="17.0" prefHeight="112.0" prefWidth="114.0" />
+            </children>
+        </Group>
+        <Group id="Notes" layoutX="736.0" layoutY="83.0">
+            <children>
+                <Label layoutX="8.0" text="Notes" />
+                <TextArea fx:id="txtAreaNotes" layoutY="13.0" onInputMethodTextChanged="#checkText" prefHeight="35.0" prefWidth="171.0" promptText="Enter notes here" wrapText="true" />
+            </children>
+        </Group>
+        <Group id="Cocktail name" layoutX="735.0" layoutY="33.0">
+            <children>
+                <TextField fx:id="txtFieldBeverageName" layoutY="6.0" onInputMethodTextChanged="#checkText" prefHeight="37.0" prefWidth="143.0" promptText="Enter name for beverage">
+                    <tooltip>
+                        <Tooltip text="Write a name for your cocktail." />
+                    </tooltip>
+                </TextField>
+                <Label layoutX="9.0" layoutY="-3.0" text="Name" />
+            </children>
+        </Group>
+        <ScrollPane fx:id="addedIngredients" hbarPolicy="NEVER" layoutX="710.0" layoutY="354.0" prefHeight="151.0" prefWidth="224.0">
+            <content>
+                <VBox fx:id="vBoxChosenIngredients" prefHeight="12.0" prefWidth="222.0" spacing="10.0" />
+            </content>
+        </ScrollPane>
+        <Button fx:id="btnExport" layoutX="750.0" layoutY="540.0" mnemonicParsing="false" onAction="#openPrintView" prefHeight="35.0" prefWidth="150.0" text="Print" />
+        <Button fx:id="btnSave" layoutX="750.0" layoutY="588.0" mnemonicParsing="false" onAction="#saveBeverageToDB" prefHeight="35.0" prefWidth="150.0" text="Save to Database" />
+        <Group layoutX="343.0" layoutY="545.0" />
+        <Group id="chosen ingredient" layoutX="365.0" layoutY="9.0">
+            <children>
+                <Label layoutX="-9.0" layoutY="2.0" text="Selected ingredient: ">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblChosenName" layoutX="96.0" layoutY="-1.0" text="None">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </Group>
+        <Group />
+        <Button fx:id="btnGlassware" layoutX="332.0" layoutY="616.0" mnemonicParsing="false" onAction="#changeGlassware" prefHeight="32.0" prefWidth="104.0" text="Change glassware" />
+      <Group id="chosen ingredient" layoutX="365.0" layoutY="31.0">
+         <children>
+            <Label layoutX="-9.0" layoutY="2.0" text="Alcohol percentage:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblChosenAlcohol" layoutX="96.0" layoutY="-1.0" text="0%">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Group>
+      <Label fx:id="lblHelp" layoutX="912.0" layoutY="4.0" onMouseClicked="#helpDialog" text="?">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+    </children>
+</AnchorPane>

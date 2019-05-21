@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Separator layoutX="14.0" layoutY="96.0" prefHeight="5.0" prefWidth="564.0" />
+      <Label layoutX="52.0" layoutY="61.0" text="Here is how to use beverage builder:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextArea editable="false" layoutX="50.0" layoutY="132.0" prefHeight="61.0" prefWidth="482.0" text="Chose glassware by clicking on the item from the list to the left.&#10; -By choosing the glass, list of the ingredients is loaded to the same list where you chose your glass." wrapText="true" />
+      <TextArea editable="false" layoutX="50.0" layoutY="211.0" prefHeight="61.0" prefWidth="482.0" text="Click on the name of the ingredient fro the list that you want to add to your drink.&#10; -Now you should see on the middle top, the name of your chosen ingredient.&#10; -The slider is now enabled" />
+      <TextArea editable="false" layoutX="50.0" layoutY="305.0" prefHeight="132.0" prefWidth="482.0" text="Adjust ingredient magnitude by moving the slider.&#10; -When you are satisfied with the magnitude you chose, press Add ingredient button to add chosen ingredient to the list of added ingredients&#10; -If you followed all the steps correctly, there should be a &quot;widget&quot; with the ingredient name, magnitude and a bar that visualizes the amount of the ingredient that you added to the glass on the down left side of the window&#10;Repeat step 2 and 3 until you are satisfied wit ingredient list or until glass is full" wrapText="true" />
+      <TextArea editable="false" layoutX="50.0" layoutY="464.0" prefHeight="94.0" prefWidth="482.0" text="In order to save or print your recipe, you must assign a name to your drink.&#10; -You will find the text field in the top right corner with some prompt text to &quot;Enter name for beverage&quot;&#10; -If you followed all the steps correctly, buttons Print and Save to Database should be enabled." wrapText="true" />
+      <Label layoutX="50.0" layoutY="112.0" text="Step 1:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="193.0" text="Step 2:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="287.0" text="Step 3:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="444.0" text="Step 4:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

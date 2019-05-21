@@ -1,0 +1,26 @@
+.root{
+    -fx-background-color: White;
+}
+.label{
+    -fx-font-weight: bold;
+}
+#ingredientsList{
+    -fx-background-color: rgba(0, 0, 0, 0.13);
+}
+#ingredientsList .progress-bar{
+    -fx-opacity: 100;
+    -fx-pref-height: 5;
+    -fx-background-color: #b53904;
+    -fx-background-radius: 5;
+
+}
+#ingredientsList .label{
+
+}
+#ingredientsList .progress-bar .bar {
+
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+    -fx-background-color: #ef6b02;
+    -fx-background-radius: 5;
+}
