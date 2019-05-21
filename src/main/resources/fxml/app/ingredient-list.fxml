@@ -49,7 +49,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </MenuButton>
-      <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="28.0" prefHeight="28.0" prefWidth="320.0" promptText="Insert search text" />
+      <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="28.0" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="320.0" promptText="Insert search text" />
       <Label fx:id="lblSearch" layoutX="25.0" layoutY="29.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
       <Label layoutX="461.0" layoutY="599.0" text="Similar ingredient with" />
       <TextField fx:id="txtSimilarWith" layoutX="454.0" layoutY="612.0" promptText="Ingredient Name ">

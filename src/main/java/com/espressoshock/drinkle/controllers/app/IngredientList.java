@@ -67,6 +67,14 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     button.setText(x.getName());
                     vBoxIngredients.getChildren().add(button);
             }
+            if(x.getBrand().getProductType().getName().toLowerCase().contains(text)){
+                Button button = new Button();
+                button.setOnAction(this::selectVbButton);
+                button.setMinWidth(400);
+                button.setMinHeight(40);
+                button.setText(x.getName());
+                vBoxIngredients.getChildren().add(button);
+            }
         }
         menuBtnBrand.setText("Brand");
         menuBtnCategory.setText("Category");
@@ -181,7 +189,9 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 BrandsEnum.MARTINI, BrandsEnum.GLENFIDDICH, BrandsEnum.JAMESON, BrandsEnum.GLENFARCLASS, BrandsEnum.JIM_BEAM, BrandsEnum.JOHNNIE_WALKER, BrandsEnum.JACK_DANIELS, BrandsEnum.JEAN_MARC, BrandsEnum.TITOS, BrandsEnum.STOLICHNAYA, BrandsEnum.SMIRNOFF, BrandsEnum.BLACK_COW, BrandsEnum.GREY_GOOSE,
                 BrandsEnum.OTHER_BRAND, BrandsEnum.SHERIDANS, BrandsEnum.SAMBUCA, BrandsEnum.KAHLUA, BrandsEnum.CREME_DE_MENTHE, BrandsEnum.FERNET, BrandsEnum.GALLIANO, BrandsEnum.SKOL, BrandsEnum.BIRRA_MORETTI, BrandsEnum.STELLA_ARTIOS, BrandsEnum.PAULANER, BrandsEnum.CORONA, BrandsEnum.BUDWEISER,
                 BrandsEnum.CARLSBERG, BrandsEnum.HEINEKEN, BrandsEnum.COINTREAU, BrandsEnum.MIDORI, BrandsEnum.NOIAU_DE_POISSY, BrandsEnum.MANZANA_VERDE, BrandsEnum.FIZZ, BrandsEnum.BULMERS, BrandsEnum.POMAGNE, BrandsEnum.SOMERSBY, BrandsEnum.MAGNERS, BrandsEnum.DEPREVILLE,
-                BrandsEnum.PROSECCO, BrandsEnum.PERRIER_JOUET, BrandsEnum.CINZANO, BrandsEnum.CRISTAL, BrandsEnum.MOET_CHANDON, BrandsEnum.ABSOLUTE};
+                BrandsEnum.PROSECCO, BrandsEnum.PERRIER_JOUET, BrandsEnum.CINZANO, BrandsEnum.CRISTAL, BrandsEnum.MOET_CHANDON, BrandsEnum.ABSOLUTE, BrandsEnum.COCA_COLA,BrandsEnum.SANTAL,BrandsEnum.PEPSI,BrandsEnum.FRESH_JUICE,BrandsEnum.UNKNOWN,BrandsEnum.NATURAL_SYRUP,BrandsEnum.COCKTAIL_SYRUP,
+                BrandsEnum.FRESH_FRUITS,BrandsEnum.CAN_FRUITS,BrandsEnum.CONFIT_FRUITS,BrandsEnum.COFFEE_ESPRESSO,BrandsEnum.HOT_CHOCOLATE,BrandsEnum.TEA,BrandsEnum.BOILD_WINE,BrandsEnum.POWDER_FOR_COCKTAIL,BrandsEnum.DIFFERENT_GARNISHES,BrandsEnum.FROZEN_FRUITS,BrandsEnum.ICE,BrandsEnum.PERRIER,
+                BrandsEnum.NORDIC,BrandsEnum.EVIAN,BrandsEnum.EGG_BASED,BrandsEnum.MILK_BASED};
         Collections.addAll(brandsList, brands);
     }
 

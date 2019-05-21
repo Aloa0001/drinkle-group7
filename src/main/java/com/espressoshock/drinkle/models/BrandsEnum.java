@@ -48,7 +48,18 @@ public enum BrandsEnum {
     BUDWEISER("Budweiser",  IngredientCategory.BEER),CORONA("Corona",  IngredientCategory.BEER),
     PAULANER("Paulaner",  IngredientCategory.BEER),STELLA_ARTIOS("Stella Artios",  IngredientCategory.BEER),
     BIRRA_MORETTI("Birra Moretti",  IngredientCategory.BEER),SKOL("Skol",  IngredientCategory.BEER),
-    OTHER_BRAND("Other Brand",IngredientCategory.OTHER);
+    OTHER_BRAND("Other Brand",IngredientCategory.OTHER),COCA_COLA("Coca Cola",IngredientCategory.JUICE),
+    PEPSI("Pepsi",IngredientCategory.JUICE),SANTAL("Santal",IngredientCategory.JUICE),
+    UNKNOWN("Unknown",IngredientCategory.JUICE),NATURAL_SYRUP("Natural Syrup",IngredientCategory.SYRUP),
+    COCKTAIL_SYRUP("Coctail Syrup", IngredientCategory.SYRUP),FRESH_JUICE("Fresh Juice",IngredientCategory.JUICE),FRESH_FRUITS("Fresh Fruits",IngredientCategory.FRUIT),
+    CAN_FRUITS("Can Fruits", IngredientCategory.FRUIT), CONFIT_FRUITS("Confit Fruits",IngredientCategory.FRUIT),
+    COFFEE_ESPRESSO("Coffee Espresso", IngredientCategory.WARM_DRINK),HOT_CHOCOLATE("Hot Chocolate",IngredientCategory.WARM_DRINK),
+    TEA("Tea",IngredientCategory.WARM_DRINK), BOILD_WINE("Boild Wine",IngredientCategory.WARM_DRINK),
+    POWDER_FOR_COCKTAIL("Powder for Cocktail", IngredientCategory.POWDER), DIFFERENT_GARNISHES("Different Garnishes",IngredientCategory.GARNISH),
+    FROZEN_FRUITS("Frozen Fruits",IngredientCategory.ICE_TYPE),ICE("Ice",IngredientCategory.ICE_TYPE),
+    PERRIER("Perrier",IngredientCategory.WATER),NORDIC("Nordic",IngredientCategory.WATER),
+    EVIAN("Evian",IngredientCategory.WATER),EGG_BASED("Egg Based",IngredientCategory.DAIRY_PRODUCT),
+    MILK_BASED("Milk Based",IngredientCategory.DAIRY_PRODUCT);
 
     private final String brandName;
     private final IngredientCategory productType;
