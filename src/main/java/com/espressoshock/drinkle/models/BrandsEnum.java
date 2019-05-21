@@ -65,4 +65,13 @@ public enum BrandsEnum {
     public IngredientCategory getProductType() {
         return productType;
     }
+
+    public static BrandsEnum fromString(String name) {
+        for (BrandsEnum b : BrandsEnum.values()) {
+            if (b.brandName.equalsIgnoreCase(name)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }

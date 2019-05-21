@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -49,6 +50,7 @@
                </children>
             </VBox>
             <Button layoutX="749.0" layoutY="617.0" mnemonicParsing="false" onMousePressed="#openLoginView" prefHeight="54.0" prefWidth="251.0" text="I already have an account" />
+            <Text fx:id="errorText" fill="#eb0e0e" layoutX="45.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Something went wrong, try again!" wrappingWidth="447.02734375" />
          </children>
       </Pane>
    </children>

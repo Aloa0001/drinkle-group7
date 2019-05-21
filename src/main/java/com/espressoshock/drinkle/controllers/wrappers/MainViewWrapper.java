@@ -4,8 +4,6 @@ import static com.espressoshock.drinkle.appState.UserState.loggedIn;
 import static com.espressoshock.drinkle.appState.UserState.loggedOut;
 
 import com.espressoshock.drinkle.appState.Current;
-import com.espressoshock.drinkle.controllers.auth.*;
-import com.espressoshock.drinkle.controllers.app.*;
 import com.espressoshock.drinkle.viewLoader.EventObserverAdapter;
 import com.espressoshock.drinkle.viewLoader.IEventObserver;
 import com.espressoshock.drinkle.viewLoader.ViewLoader;

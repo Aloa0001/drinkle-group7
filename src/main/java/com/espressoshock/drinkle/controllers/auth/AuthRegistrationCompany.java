@@ -7,11 +7,15 @@ import com.espressoshock.drinkle.viewLoader.ViewMetadata;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class AuthRegistrationCompany extends EventDispatcherAdapter {
 
   @FXML
   TextField nameTextField, emailTextField, passwordTextField;
+
+  @FXML
+  Text errorText;
 
   @FXML
   public void initialize() {
@@ -20,7 +24,9 @@ public class AuthRegistrationCompany extends EventDispatcherAdapter {
   }
 
 
-  private void setupUI() {}
+  private void setupUI() {
+    errorText.setVisible(false);
+  }
 
   private void setupComponents() {}
 
@@ -38,8 +44,10 @@ public class AuthRegistrationCompany extends EventDispatcherAdapter {
 
     if ((nameTextField.getText().isEmpty()) ||
         (emailTextField.getText().isEmpty()) ||
-        (passwordTextField.getText().isEmpty()))
-    {return;}
+        (passwordTextField.getText().isEmpty())) {
+      errorText.setVisible(true);
+      return;
+    }
 
     AuthService registrationService = new AuthService();
 
@@ -51,8 +59,10 @@ public class AuthRegistrationCompany extends EventDispatcherAdapter {
             AccountType.Company
         )
     ) {
+      errorText.setVisible(false);
       super.dispatchViewChangeRequest(ViewLoader.default_view);
     } else {
+      errorText.setVisible(true);
       System.out.println("Something went wrong, try again");
     }
   }
