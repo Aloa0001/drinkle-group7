@@ -4,7 +4,6 @@ import com.espressoshock.drinkle.controllers.app.beverageBuilder.Glassware;
 import com.espressoshock.drinkle.models.Beverage;
 import com.espressoshock.drinkle.models.Ingredient;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
-import java.net.URISyntaxException;
 import com.espressoshock.drinkle.appState.Current;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -116,12 +115,18 @@ public class Print implements Initializable {
 
     }
 
-    //TODO: Add real data.
     public void onSendByEmail() {
         String date = Current.environment.currentDate;
+        String ingredientsText = null;
+
+        //TODO: Check on Windows pc if it works.
+        ingredients.forEach(ingredient ->
+            ingredientsText.concat(ingredient.getName() + " ")
+        );
+
         try {
-            composeEmail("play4freesead@gmail.com", "Drinkle!",
-                "Hello Drinkle user,\r\n Here is you drink: \r\n" + date);
+            composeEmail("email@change.it", "Drinkle!",
+                "Hello Drinkle user,\r\n Here is you drink data: \r\n" + ingredientsText + date);
         } catch (Exception err) {
             err.printStackTrace();
         }
