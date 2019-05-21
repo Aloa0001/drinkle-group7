@@ -63,7 +63,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 if (x.getName().toLowerCase().contains(text)) {
                     Button button = new Button();
                     button.setOnAction(this::selectVbButton);
-                    button.setMinWidth(280);
+                    button.setMinWidth(400);
                     button.setMinHeight(40);
                     button.setText(x.getName());
                     vBoxIngredients.getChildren().add(button);
@@ -76,6 +76,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectAlcoholSelection(ActionEvent event) {
+        vBoxIngredients.getChildren().clear();
         MenuItem selection = (MenuItem) event.getSource();
         if (selection.getText().equals("Alcoholic")) {
             menuBtnAlcoholOption.setText("Alcohol");
@@ -120,7 +121,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             if (selection.getText().equals(x.getBrand().getBrandName())) {
                 Button button = new Button();
                 button.setOnAction(this::selectVbButton);
-                button.setMinWidth(600);
+                button.setMinWidth(400);
                 button.setMinHeight(40);
                 button.setText(x.getName());
                 vBoxIngredients.getChildren().add(button);
@@ -130,6 +131,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectVbButton(ActionEvent e) {
+
         try {
             Button selection = (Button) e.getSource();
             for (Ingredient x : ingredientsList) {
@@ -151,7 +153,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     }
                 }
             }
-            selection.setDisable(false);
         } catch (Exception exc) {
             exc.printStackTrace();
         }
@@ -162,7 +163,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 IngredientCategory.BRANDY, IngredientCategory.CIDER, IngredientCategory.WINE, IngredientCategory.BEER, IngredientCategory.OTHER};
         Collections.addAll(categoriesAlc, category);
     }
-
     private void populateCategoryMenu(ArrayList<IngredientCategory> categoriesData) {
         menuBtnCategory.getItems().clear();
         for (IngredientCategory x : categoriesData) {
@@ -171,13 +171,11 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             menuBtnCategory.getItems().add(category);
         }
     }
-
     private void populateNonAlcCategories() {
         IngredientCategory[] nonAlcCategories = {IngredientCategory.GARNISH, IngredientCategory.ICE_TYPE, IngredientCategory.WATER, IngredientCategory.POWDER, IngredientCategory.OTHER,
                 IngredientCategory.DAIRY_PRODUCT, IngredientCategory.JUICE, IngredientCategory.SYRUP, IngredientCategory.FRUIT, IngredientCategory.WARM_DRINK};
         Collections.addAll(categoryNonAlc, nonAlcCategories);
     }
-
     private void populateBrandsList() {
         BrandsEnum[] brands = {BrandsEnum.DOM_PERIGNON, BrandsEnum.GRENACHE, BrandsEnum.PINOT_NOIR, BrandsEnum.SHIRAZ, BrandsEnum.MERLOT, BrandsEnum.CABERNET_SAUVIGNON, BrandsEnum.PINOT_GRIS, BrandsEnum.CHARDONNAY, BrandsEnum.SAUVIGNON_BLANC, BrandsEnum.PAMA, BrandsEnum.MARASCHINO,
                 BrandsEnum.LIMONCELLO, BrandsEnum.GRAND_MARNIER, BrandsEnum.CAMPARI, BrandsEnum.BANANAS, BrandsEnum.ROCK_RYE, BrandsEnum.ADVOCAAT, BrandsEnum.NOCELLO, BrandsEnum.DISARONNO, BrandsEnum.DRAMBUIE, BrandsEnum.UNICUM, BrandsEnum.JAGERMEISTER, BrandsEnum.MASATICA, BrandsEnum.COCCHI,
@@ -190,12 +188,12 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         Collections.addAll(brandsList, brands);
     }
 
-
     /**
      * DB connection
      */
     @FXML
     private void addIngredient() throws Exception {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         int ingredientID = 0;
         int accountID = 0;
         try {
@@ -207,11 +205,22 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         try {
             connection = ConnectionLayer.getConnection();
             statement = connection.createStatement();
-            String query = String.format("insert into company_account_has_ingredient (company_account_id, ingredient_id) values (%d, %d);", accountID, ingredientID);
-            resultSet = statement.executeQuery(query);
+            String sql = "INSERT INTO company_account_has_ingredient(company_account_id, ingredient_id) VALUES(?,?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1,accountID);
+            pstmt.setInt(2,ingredientID);
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1) {
+                alert.setHeaderText(lblSelectedIngredientName.getText()+" was added to your list!" );
+                alert.setContentText("Ingredient "+lblSelectedIngredientName.getText()+" was added to your collection of ingredients.");
+                alert.showAndWait();
+            }
         } catch (SQLException ex) {
-            System.out.println("Exception: ");
-            ex.printStackTrace();
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.setHeaderText("You have already the ingredient "+lblSelectedIngredientName.getText()+" in your list!" );
+            alert.setContentText("Please chose another ingredient!");
+            alert.showAndWait();
         } finally {
             ConnectionLayer.cleanUp(statement, resultSet);
         }
@@ -232,7 +241,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 ingredient_alcohol = resultSet.getInt(4);
                 ingredient_price_per_litre = resultSet.getInt(3);
                 ingredient_brand = resultSet.getString(2);
-
                 for (BrandsEnum brand : brandsList) {
                     if (ingredient_brand.equals(brand.getBrandName())) {
                         ingredientsList.add(new Ingredient(ingredient_name, ingredient_alcohol, ingredient_price_per_litre, brand, 0));
@@ -240,7 +248,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Exception: ");
             ex.printStackTrace();
         } finally {
             ConnectionLayer.cleanUp(statement, resultSet);

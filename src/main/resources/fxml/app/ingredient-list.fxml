@@ -22,7 +22,7 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Button fx:id="btnSimilarProduct" layoutX="631.0" layoutY="600.0" mnemonicParsing="false" onAction="#selectVbButton" prefHeight="37.0" prefWidth="200.0" text="Similar Product ">
+      <Button fx:id="btnSimilarProduct" layoutX="661.0" layoutY="598.0" mnemonicParsing="false" onAction="#selectVbButton" prefHeight="37.0" prefWidth="200.0" text="Similar Product ">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
@@ -51,8 +51,8 @@
       </MenuButton>
       <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="28.0" prefHeight="28.0" prefWidth="320.0" promptText="Insert search text" />
       <Label fx:id="lblSearch" layoutX="25.0" layoutY="29.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
-      <Label layoutX="506.0" layoutY="601.0" text="Similar ingredient with" />
-      <TextField fx:id="txtSimilarWith" layoutX="499.0" layoutY="614.0" promptText="Ingredient Name ">
+      <Label layoutX="461.0" layoutY="599.0" text="Similar ingredient with" />
+      <TextField fx:id="txtSimilarWith" layoutX="454.0" layoutY="612.0" promptText="Ingredient Name ">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></TextField>
