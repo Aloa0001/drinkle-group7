@@ -58,7 +58,7 @@ public class AuthService {
     } finally {
       ConnectionLayer.cleanUp(statement, resultSet);
     }
-    return true;/// NEMANJA
+    return false;
   }
 
   boolean loginAsCompanyAccount(String email, String password) {
@@ -88,7 +88,7 @@ public class AuthService {
     } finally {
       ConnectionLayer.cleanUp(statement, resultSet);
     }
-    return true;/// NEMANJA
+    return false;
   }
 
 
