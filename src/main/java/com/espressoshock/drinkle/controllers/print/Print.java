@@ -1,10 +1,10 @@
 package com.espressoshock.drinkle.controllers.print;
 
+import com.espressoshock.drinkle.appState.Current;
 import com.espressoshock.drinkle.controllers.app.beverageBuilder.Glassware;
 import com.espressoshock.drinkle.models.Beverage;
 import com.espressoshock.drinkle.models.Ingredient;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
-import com.espressoshock.drinkle.appState.Current;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -87,7 +87,6 @@ public class Print implements Initializable {
         addedIngredientPercentBar.setPrefWidth(163);
         addedIngredientPercentBar.setPrefHeight(8);
         addedIngredientPercentBar.setProgress((selected.getMagnitude() / (printGlass.getVolume() / 100.00)) / 100.00);//<-- 1.2 is glass volume/100
-        System.out.println((selected.getMagnitude() / (printGlass.getVolume() / 100.00)) / 100.00);
         Group ingredient = new Group();
         ingredient.getChildren().addAll(ingredientName, ingredientVolume, addedIngredientPercentBar);
         ingredientsList.getChildren().add(ingredient);
@@ -125,6 +124,7 @@ public class Print implements Initializable {
         );
 
         try {
+
             composeEmail("email@change.it", "Drinkle!",
                 "Hello Drinkle user,\r\n Here is you drink data: \r\n" + ingredientsText + date);
         } catch (Exception err) {
@@ -183,7 +183,6 @@ public class Print implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
 
     }
