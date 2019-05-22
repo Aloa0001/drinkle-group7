@@ -114,12 +114,19 @@ public class Print implements Initializable {
 
     }
 
-    //TODO: Add real data.
     public void onSendByEmail() {
         String date = Current.environment.currentDate;
+        String ingredientsText = null;
+
+        //TODO: Check on Windows pc if it works.
+        ingredients.forEach(ingredient ->
+            ingredientsText.concat(ingredient.getName() + " ")
+        );
+
         try {
-            composeEmail("play4freesead@gmail.com", "Drinkle!",
-                    "Hello Drinkle user,\r\n Here is you drink: \r\n" + date);
+
+            composeEmail("email@change.it", "Drinkle!",
+                "Hello Drinkle user,\r\n Here is you drink data: \r\n" + ingredientsText + date);
         } catch (Exception err) {
             err.printStackTrace();
         }
