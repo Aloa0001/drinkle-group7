@@ -101,7 +101,10 @@
                         </Label>
                     </children>
                 </Group>
-                <Button fx:id="btnAddIngredient" layoutX="240.0" layoutY="281.0" mnemonicParsing="false" onAction="#addIngredientWidget" prefHeight="65.0" prefWidth="141.0" text="Add ingredient" />
+                <Button fx:id="btnAddIngredient" layoutX="240.0" layoutY="281.0" mnemonicParsing="false" onAction="#addIngredientWidget" prefHeight="65.0" prefWidth="141.0" text="Add ingredient">
+               <tooltip>
+                  <Tooltip text="Click here to add ingredient" />
+               </tooltip></Button>
                   <Label layoutX="275.0" layoutY="78.0" prefHeight="15.0" prefWidth="82.0" text="Move the slider " textOverrun="CENTER_ELLIPSIS" wrapText="true" />
             <Label layoutX="275.0" layoutY="93.0" prefHeight="15.0" prefWidth="105.0" text="to adjust the volume" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
             </children>
@@ -113,16 +116,19 @@
                         <VBox fx:id="vBoxListOfIngredients" prefHeight="625.0" prefWidth="242.0" />
                     </content>
                 </ScrollPane>
-                <Separator layoutY="52.0" prefHeight="1.0" prefWidth="232.0" />
+                <Separator layoutY="52.0" prefHeight="1.0" prefWidth="251.0" />
                 <Group id="search" layoutX="22.0" layoutY="22.0">
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="20.0" layoutX="-16.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="150.0" fitWidth="20.0" layoutX="-18.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../images/app/beverage-builder/search.png" />
                             </image>
                         </ImageView>
-                        <TextField fx:id="searchField" layoutX="111.0" prefHeight="23.0" prefWidth="103.0" />
-                        <MenuButton fx:id="brandsList" layoutX="6.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="101.0" text="Chose brand" />
+                        <TextField fx:id="searchField" layoutX="125.0" prefHeight="23.0" prefWidth="103.0">
+                     <tooltip>
+                        <Tooltip text="Enter text to search for more specific ingredients" />
+                     </tooltip></TextField>
+                        <MenuButton fx:id="brandsList" layoutX="3.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" text="Chose cathegory" />
                     </children>
                 </Group>
             </children>
@@ -154,8 +160,14 @@
                 <VBox fx:id="vBoxChosenIngredients" prefHeight="12.0" prefWidth="222.0" spacing="10.0" />
             </content>
         </ScrollPane>
-        <Button fx:id="btnExport" layoutX="750.0" layoutY="540.0" mnemonicParsing="false" onAction="#openPrintView" prefHeight="35.0" prefWidth="150.0" text="Print" />
-        <Button fx:id="btnSave" layoutX="750.0" layoutY="588.0" mnemonicParsing="false" onAction="#saveBeverageToDB" prefHeight="35.0" prefWidth="150.0" text="Save to Database" />
+        <Button fx:id="btnExport" layoutX="750.0" layoutY="540.0" mnemonicParsing="false" onAction="#openPrintView" prefHeight="35.0" prefWidth="150.0" text="Print">
+         <tooltip>
+            <Tooltip text="Click here to open Print window" />
+         </tooltip></Button>
+        <Button fx:id="btnSave" layoutX="750.0" layoutY="588.0" mnemonicParsing="false" onAction="#saveBeverageToDB" prefHeight="35.0" prefWidth="150.0" text="Save to Database">
+         <tooltip>
+            <Tooltip text="Click here to save your beverage to the Database" />
+         </tooltip></Button>
         <Group layoutX="343.0" layoutY="545.0" />
         <Group id="chosen ingredient" layoutX="365.0" layoutY="9.0">
             <children>
@@ -172,7 +184,10 @@
             </children>
         </Group>
         <Group />
-        <Button fx:id="btnGlassware" layoutX="332.0" layoutY="616.0" mnemonicParsing="false" onAction="#changeGlassware" prefHeight="32.0" prefWidth="104.0" text="Change glassware" />
+        <Button fx:id="btnGlassware" layoutX="332.0" layoutY="616.0" mnemonicParsing="false" onAction="#changeGlassware" prefHeight="32.0" prefWidth="104.0" text="Change glassware">
+         <tooltip>
+            <Tooltip text="Click here to change Glassware" />
+         </tooltip></Button>
       <Group id="chosen ingredient" layoutX="365.0" layoutY="31.0">
          <children>
             <Label layoutX="-9.0" layoutY="2.0" text="Alcohol percentage:">
@@ -194,6 +209,13 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <tooltip>
+            <Tooltip text="Click here for user manual">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Label>
     </children>
 </AnchorPane>

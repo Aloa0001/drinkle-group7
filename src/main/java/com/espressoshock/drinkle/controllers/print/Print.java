@@ -88,7 +88,6 @@ public class Print implements Initializable {
         addedIngredientPercentBar.setPrefWidth(163);
         addedIngredientPercentBar.setPrefHeight(8);
         addedIngredientPercentBar.setProgress((selected.getMagnitude() / (printGlass.getVolume() / 100.00)) / 100.00);//<-- 1.2 is glass volume/100
-        System.out.println((selected.getMagnitude() / (printGlass.getVolume() / 100.00)) / 100.00);
         Group ingredient = new Group();
         ingredient.getChildren().addAll(ingredientName, ingredientVolume, addedIngredientPercentBar);
         ingredientsList.getChildren().add(ingredient);
