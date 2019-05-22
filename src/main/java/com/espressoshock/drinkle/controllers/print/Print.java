@@ -1,11 +1,10 @@
 package com.espressoshock.drinkle.controllers.print;
 
+import com.espressoshock.drinkle.appState.Current;
 import com.espressoshock.drinkle.controllers.app.beverageBuilder.Glassware;
 import com.espressoshock.drinkle.models.Beverage;
 import com.espressoshock.drinkle.models.Ingredient;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
-import java.net.URISyntaxException;
-import com.espressoshock.drinkle.appState.Current;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -120,7 +119,7 @@ public class Print implements Initializable {
         String date = Current.environment.currentDate;
         try {
             composeEmail("play4freesead@gmail.com", "Drinkle!",
-                "Hello Drinkle user,\r\n Here is you drink: \r\n" + date);
+                    "Hello Drinkle user,\r\n Here is you drink: \r\n" + date);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -177,7 +176,6 @@ public class Print implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
 
     }

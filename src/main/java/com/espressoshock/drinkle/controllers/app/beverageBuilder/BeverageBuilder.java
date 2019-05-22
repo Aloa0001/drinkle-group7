@@ -31,10 +31,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class BeverageBuilder extends EventDispatcherAdapter implements Initializable {
@@ -65,8 +62,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private Ingredient selected = null;// selected object of ingredient
     private RingProgressIndicator alcoholPercent = new RingProgressIndicator();// <-- to be accessed in print
     private ArrayList<String> cathegories = new ArrayList<>();
-    private ArrayList<Ingredient> listIngredientsShowing = new ArrayList<>();
-    private String selectedCathegory=null;
+    private String selectedCathegory = null;
     //------------------ @FXML ------------------------------
     @FXML
     private Label lblChosenName, lblVolume, lblCost, lblTotalVolume, lblChosenGlass, lblChosenAlcohol, lblHelp;
@@ -106,10 +102,8 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             searchList2.clear();
             vBoxListOfIngredients.getChildren().removeAll();
             brandsList.setText(m.getText());
-            selectedCathegory=null;
-            for(Ingredient k : choseIngredientsList2){
-                searchList2.add(k);
-            }
+            selectedCathegory = null;
+            searchList2.addAll(choseIngredientsList2);
             IngredientAddToList(choseIngredientsList2);
 
 
@@ -124,8 +118,8 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 brandsList.setText(a.getText());
                 selectedCathegory = a.getText();
 
-                for (Ingredient y : choseIngredientsList2){
-                    if(y.getBrand()!=null && y.getBrand().getProductType().getName()==selectedCathegory){
+                for (Ingredient y : choseIngredientsList2) {
+                    if (y.getBrand() != null && y.getBrand().getProductType().getName().equals(selectedCathegory)) {
                         searchList2.add(y);
                     }
                 }
@@ -316,7 +310,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void openPrintView(Event e) throws Exception {
         createBeverageObject();
-        Button b = (Button)e.getSource();
+        Button b = (Button) e.getSource();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/app/print-layout.fxml"));
         Stage primaryStage = new Stage();
@@ -581,9 +575,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             glass = null;
             alcoholPercent.setProgress(0);
             vBoxChosenIngredients.getChildren().clear();
-            for(Ingredient l : addedIngredientsList2){
-                choseIngredientsList2.add(l);
-            }
+            choseIngredientsList2.addAll(addedIngredientsList2);
             addedIngredientsList2.clear();
             slider.setMin(0.0);
             lblCost.setText("0.0");
@@ -794,32 +786,31 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private void toLowerCase() {
         searchField.textProperty().addListener((ov, oldValue, newValue) -> searchField.setText(newValue.toLowerCase()));
     }
+
     @FXML
-    private void helpDialog(){
+    private void helpDialog() {
 
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/app/beverage-builder/user-manual.fxml"));
         final Stage stage = new Stage();
         stage.initModality(Modality.NONE);
-        
+
         Parent root = null;
         try {
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        final Scene manual = new Scene(root);
+        final Scene manual = new Scene(Objects.requireNonNull(root));
         stage.setTitle("Drinkle-User Manual");
         stage.setResizable(false);
         stage.setScene(manual);
         stage.setAlwaysOnTop(true);
         stage.show();
-        if (stage.isShowing()){
+        if (stage.isShowing()) {
             lblHelp.setDisable(true);
         }
-        stage.setOnCloseRequest(event -> {
-            lblHelp.setDisable(false);
-        });
+        stage.setOnCloseRequest(event -> lblHelp.setDisable(false));
     }
 
     @Override
