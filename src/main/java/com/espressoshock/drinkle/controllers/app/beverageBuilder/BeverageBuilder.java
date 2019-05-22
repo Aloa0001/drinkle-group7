@@ -103,7 +103,9 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             vBoxListOfIngredients.getChildren().removeAll();
             brandsList.setText(m.getText());
             selectedCathegory = null;
-            searchList2.addAll(choseIngredientsList2);
+            for(Ingredient a : choseIngredientsList2){
+                searchList2.add(a);
+            }
             IngredientAddToList(choseIngredientsList2);
 
 
@@ -575,7 +577,9 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             glass = null;
             alcoholPercent.setProgress(0);
             vBoxChosenIngredients.getChildren().clear();
-            choseIngredientsList2.addAll(addedIngredientsList2);
+            for (Ingredient k :addedIngredientsList2){
+                choseIngredientsList2.add(k);
+            }
             addedIngredientsList2.clear();
             slider.setMin(0.0);
             lblCost.setText("0.0");
@@ -660,6 +664,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void addIngredientWidget() {
         if (selected != null) {
+            brandsList.setText("All");
             costSeparator = Double.valueOf(cost);
             // Test purposes only
             btnAddIngredient.setDisable(true);
@@ -710,6 +715,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             slider.setDisable(true);
             removeItem.setOnAction(event -> {// removig a widget
                 brandsList.setText("All");
+                searchField.setText("");
                 vBoxChosenIngredients.getChildren().remove(ingredient);
                 addedIngredientsList2.remove(selected);
                 slider.setMin(countVolume());// adding back to volume removed ingredient value
@@ -722,7 +728,13 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 costSeparator = costSeparator - (selected.getPricePerLiter() * selected.getMagnitude() / 1000.00);
                 choseIngredientsList2.add(selected);
                 alcoholPercent.setProgress(countPercentage());
+
                 IngredientAddToList(choseIngredientsList2);
+                searchList.clear();
+                searchList2.clear();
+                for(Ingredient g : choseIngredientsList2){
+                    searchList2.add(g);
+                }
                 btnExport.setDisable(disableExport());
                 if (addedIngredientsList2.isEmpty()) {
                     slider.setMin(0);
@@ -745,6 +757,12 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             findSelected();
             IngredientAddToList(choseIngredientsList2);
             selected = null;
+
+            searchList.clear();
+            searchList2.clear();
+            for(Ingredient a : choseIngredientsList2){
+                searchList2.add(a);
+            }
 
             lblChosenName.setText("None");
             lblChosenAlcohol.setText("0%");
