@@ -20,8 +20,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private ResultSet resultSet = null;
 
     private ArrayList<Ingredient> ingredientsList = new ArrayList<>();
-    private ArrayList<IngredientCategory> categoriesAlc = new ArrayList<>();
     private ArrayList<BrandsEnum> brandsList = new ArrayList<>();
+    private ArrayList<IngredientCategory> categoriesAlc = new ArrayList<>();
     private ArrayList<IngredientCategory> categoryNonAlc = new ArrayList<>();
 
 
@@ -51,7 +51,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             e.printStackTrace();
             System.out.println("Failed to populate the Ingredients list");
         }
-
     }
 
     @FXML
@@ -116,7 +115,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 menuBtnBrand.getItems().add(button);
             }
         }
-
     }
 
     @FXML
@@ -182,17 +180,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         Collections.addAll(categoryNonAlc, nonAlcCategories);
     }
     private void populateBrandsList() {
-        BrandsEnum[] brands = {BrandsEnum.DOM_PERIGNON, BrandsEnum.GRENACHE, BrandsEnum.PINOT_NOIR, BrandsEnum.SHIRAZ, BrandsEnum.MERLOT, BrandsEnum.CABERNET_SAUVIGNON, BrandsEnum.PINOT_GRIS, BrandsEnum.CHARDONNAY, BrandsEnum.SAUVIGNON_BLANC, BrandsEnum.PAMA, BrandsEnum.MARASCHINO,
-                BrandsEnum.LIMONCELLO, BrandsEnum.GRAND_MARNIER, BrandsEnum.CAMPARI, BrandsEnum.BANANAS, BrandsEnum.ROCK_RYE, BrandsEnum.ADVOCAAT, BrandsEnum.NOCELLO, BrandsEnum.DISARONNO, BrandsEnum.DRAMBUIE, BrandsEnum.UNICUM, BrandsEnum.JAGERMEISTER, BrandsEnum.MASATICA, BrandsEnum.COCCHI,
-                BrandsEnum.CONTRATTO, BrandsEnum.ANISETTE, BrandsEnum.VISINATA, BrandsEnum.TRIPLE_SEC, BrandsEnum.ROSOLIO, BrandsEnum.CURACAO, BrandsEnum.GUAVABERRY, BrandsEnum.CREME_DE_CASSIS, BrandsEnum.CRUZAN, BrandsEnum.CAROLANS, BrandsEnum.AMARULA, BrandsEnum.MIDNIGHT_ESPRESSO, BrandsEnum.TIA_MARIA,
-                BrandsEnum.BAILEYS, BrandsEnum.AMARETTO, BrandsEnum.ARMAGNAC, BrandsEnum.COGNAC, BrandsEnum.GREEN_ISLAND, BrandsEnum.SAINT_JAMES, BrandsEnum.HAVANA_CLUB, BrandsEnum.BACARDI, BrandsEnum.HERANCIA_DE_PLATA, BrandsEnum.JOSE_CUERVO, BrandsEnum.FORTALEZA, BrandsEnum.GORDONS, BrandsEnum.BEEFEATER,
-                BrandsEnum.MARTINI, BrandsEnum.GLENFIDDICH, BrandsEnum.JAMESON, BrandsEnum.GLENFARCLASS, BrandsEnum.JIM_BEAM, BrandsEnum.JOHNNIE_WALKER, BrandsEnum.JACK_DANIELS, BrandsEnum.JEAN_MARC, BrandsEnum.TITOS, BrandsEnum.STOLICHNAYA, BrandsEnum.SMIRNOFF, BrandsEnum.BLACK_COW, BrandsEnum.GREY_GOOSE,
-                BrandsEnum.OTHER_BRAND, BrandsEnum.SHERIDANS, BrandsEnum.SAMBUCA, BrandsEnum.KAHLUA, BrandsEnum.CREME_DE_MENTHE, BrandsEnum.FERNET, BrandsEnum.GALLIANO, BrandsEnum.SKOL, BrandsEnum.BIRRA_MORETTI, BrandsEnum.STELLA_ARTIOS, BrandsEnum.PAULANER, BrandsEnum.CORONA, BrandsEnum.BUDWEISER,
-                BrandsEnum.CARLSBERG, BrandsEnum.HEINEKEN, BrandsEnum.COINTREAU, BrandsEnum.MIDORI, BrandsEnum.NOIAU_DE_POISSY, BrandsEnum.MANZANA_VERDE, BrandsEnum.FIZZ, BrandsEnum.BULMERS, BrandsEnum.POMAGNE, BrandsEnum.SOMERSBY, BrandsEnum.MAGNERS, BrandsEnum.DEPREVILLE,
-                BrandsEnum.PROSECCO, BrandsEnum.PERRIER_JOUET, BrandsEnum.CINZANO, BrandsEnum.CRISTAL, BrandsEnum.MOET_CHANDON, BrandsEnum.ABSOLUTE, BrandsEnum.COCA_COLA,BrandsEnum.SANTAL,BrandsEnum.PEPSI,BrandsEnum.FRESH_JUICE,BrandsEnum.UNKNOWN,BrandsEnum.NATURAL_SYRUP,BrandsEnum.COCKTAIL_SYRUP,
-                BrandsEnum.FRESH_FRUITS,BrandsEnum.CAN_FRUITS,BrandsEnum.CONFIT_FRUITS,BrandsEnum.COFFEE_ESPRESSO,BrandsEnum.HOT_CHOCOLATE,BrandsEnum.TEA,BrandsEnum.BOILD_WINE,BrandsEnum.POWDER_FOR_COCKTAIL,BrandsEnum.DIFFERENT_GARNISHES,BrandsEnum.FROZEN_FRUITS,BrandsEnum.ICE,BrandsEnum.PERRIER,
-                BrandsEnum.NORDIC,BrandsEnum.EVIAN,BrandsEnum.EGG_BASED,BrandsEnum.MILK_BASED};
-        Collections.addAll(brandsList, brands);
+        Collections.addAll(brandsList, BrandsEnum.values());
     }
 
     /**
