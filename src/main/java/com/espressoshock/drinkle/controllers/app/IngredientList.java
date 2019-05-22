@@ -8,11 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-
 import java.net.URL;
-
 import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
-
 import java.sql.*;
 import java.util.*;
 
@@ -23,8 +20,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private ResultSet resultSet = null;
 
     private ArrayList<Ingredient> ingredientsList = new ArrayList<>();
-    private ArrayList<IngredientCategory> categoriesAlc = new ArrayList<>();
     private ArrayList<BrandsEnum> brandsList = new ArrayList<>();
+    private ArrayList<IngredientCategory> categoriesAlc = new ArrayList<>();
     private ArrayList<IngredientCategory> categoryNonAlc = new ArrayList<>();
 
 
