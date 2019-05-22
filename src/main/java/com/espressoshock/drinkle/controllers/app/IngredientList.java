@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
 import java.net.URL;
+
 import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
+
 import java.sql.*;
 import java.util.*;
 
@@ -28,7 +31,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     @FXML
     private VBox vBoxIngredients;
     @FXML
-    private Button btnSimilarProduct,btnSearch;
+    private Button btnSimilarProduct, btnSearch;
     @FXML
     private MenuButton menuBtnCategory, menuBtnBrand, menuBtnAlcoholOption;
     @FXML
@@ -36,7 +39,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     @FXML
     private ProgressBar progressBarAlcohol, progressBarPrice;
     @FXML
-    private Label lblSelectedIngredientName,lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand;
+    private Label lblSelectedIngredientName, lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,15 +62,15 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         vBoxIngredients.getChildren().clear();
         String text = txtSearchOption.getText().toLowerCase();
         for (Ingredient x : ingredientsList) {
-            if (text.length() != 0&&x.getName().toLowerCase().contains(text)) {
-                    Button button = new Button();
-                    button.setOnAction(this::selectVbButton);
-                    button.setMinWidth(400);
-                    button.setMinHeight(40);
-                    button.setText(x.getName());
-                    vBoxIngredients.getChildren().add(button);
+            if (text.length() != 0 && x.getName().toLowerCase().contains(text)) {
+                Button button = new Button();
+                button.setOnAction(this::selectVbButton);
+                button.setMinWidth(400);
+                button.setMinHeight(40);
+                button.setText(x.getName());
+                vBoxIngredients.getChildren().add(button);
             }
-            if(x.getBrand().getProductType().getName().toLowerCase().contains(text)){
+            if (x.getBrand().getProductType().getName().toLowerCase().contains(text)) {
                 Button button = new Button();
                 button.setOnAction(this::selectVbButton);
                 button.setMinWidth(400);
@@ -102,7 +105,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectCategory(ActionEvent e) {
-
         vBoxIngredients.getChildren().clear();
         menuBtnBrand.setText("Brands");
         MenuItem selection = (MenuItem) e.getSource();
@@ -116,7 +118,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 menuBtnBrand.getItems().add(button);
             }
         }
-
     }
 
     @FXML
@@ -151,8 +152,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     lblIngredientBrand.setText(x.getBrand().getBrandName());
                     lblIngredientCategory.setText(x.getBrand().getProductType().getName());
                     for (Ingredient y : ingredientsList) {
-                        if (x.getBrand().getProductType().getName().equals(y.getBrand().getProductType().getName())&&!x.getName().equals(y.getName())) {
-                                btnSimilarProduct.setText(y.getName());
+                        if (x.getBrand().getProductType().getName().equals(y.getBrand().getProductType().getName()) && !x.getName().equals(y.getName())) {
+                            btnSimilarProduct.setText(y.getName());
                         }
                     }
                 }
@@ -168,6 +169,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 IngredientCategory.BRANDY, IngredientCategory.CIDER, IngredientCategory.WINE, IngredientCategory.BEER, IngredientCategory.OTHER};
         Collections.addAll(categoriesAlc, category);
     }
+
     private void populateCategoryMenu(ArrayList<IngredientCategory> categoriesData) {
         menuBtnCategory.getItems().clear();
         for (IngredientCategory x : categoriesData) {
@@ -176,11 +178,13 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             menuBtnCategory.getItems().add(category);
         }
     }
+
     private void populateNonAlcCategories() {
         IngredientCategory[] nonAlcCategories = {IngredientCategory.GARNISH, IngredientCategory.ICE_TYPE, IngredientCategory.WATER, IngredientCategory.POWDER, IngredientCategory.OTHER,
                 IngredientCategory.DAIRY_PRODUCT, IngredientCategory.JUICE, IngredientCategory.SYRUP, IngredientCategory.FRUIT, IngredientCategory.WARM_DRINK};
         Collections.addAll(categoryNonAlc, nonAlcCategories);
     }
+
     private void populateBrandsList() {
         Collections.addAll(brandsList, BrandsEnum.values());
     }
@@ -205,17 +209,17 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             String sql = "INSERT INTO company_account_has_ingredient(company_account_id, ingredient_id) VALUES(?,?)";
             PreparedStatement pstmt = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1,accountID);
-            pstmt.setInt(2,ingredientID);
+            pstmt.setInt(1, accountID);
+            pstmt.setInt(2, ingredientID);
             int rowAffected = pstmt.executeUpdate();
-            if(rowAffected == 1) {
-                alert.setHeaderText(lblSelectedIngredientName.getText()+" was added to your list!" );
-                alert.setContentText("Ingredient "+lblSelectedIngredientName.getText()+" was added to your collection of ingredients.");
+            if (rowAffected == 1) {
+                alert.setHeaderText(lblSelectedIngredientName.getText() + " was added to your list!");
+                alert.setContentText("Ingredient " + lblSelectedIngredientName.getText() + " was added to your collection of ingredients.");
                 alert.showAndWait();
             }
         } catch (SQLException ex) {
             alert.setAlertType(Alert.AlertType.WARNING);
-            alert.setHeaderText("You have already the ingredient "+lblSelectedIngredientName.getText()+" in your list!" );
+            alert.setHeaderText("You have already the ingredient " + lblSelectedIngredientName.getText() + " in your list!");
             alert.setContentText("Please chose another ingredient!");
             alert.showAndWait();
         } finally {
@@ -223,6 +227,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         connection.close();
     }
+
     private void retrieveIngredientsFromDB() throws Exception {
         String ingredient_name;
         int ingredient_alcohol;
@@ -251,6 +256,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         connection.close();
     }
+
     private int retrieveIngredientIdFromDB(String ingredientName) throws Exception {
         int ingredient_id = 0;
         try {
@@ -270,6 +276,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         connection.close();
         return ingredient_id;
     }
+
     private int retrieveUserIdFromDB() throws Exception {
         int user_id = 0;
         String user_email = Current.environment.currentUser.getEmail();
