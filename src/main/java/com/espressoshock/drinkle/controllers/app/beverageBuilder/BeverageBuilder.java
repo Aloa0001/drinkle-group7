@@ -1,11 +1,9 @@
 package com.espressoshock.drinkle.controllers.app.beverageBuilder;
 
+import com.espressoshock.drinkle.appState.Current;
 import com.espressoshock.drinkle.controllers.print.Print;
 import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
-import com.espressoshock.drinkle.models.Beverage;
-import com.espressoshock.drinkle.models.BrandsEnum;
-import com.espressoshock.drinkle.models.Ingredient;
-import com.espressoshock.drinkle.models.IngredientCategory;
+import com.espressoshock.drinkle.models.*;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
 import com.espressoshock.drinkle.viewLoader.EventDispatcherAdapter;
 import javafx.event.Event;
@@ -157,7 +155,59 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         for (Ingredient a : d.getIngredients()) {
             createBeverageHasIngredients(a);
         }
+        createUserHasBeverages(d);
     }
+    public String returnAccType(){
+        String accType="";
+        Account curr = Current.environment.currentUser;
+        if(curr instanceof PrivateAccount){
+            accType="PRIVATE";
+            System.out.println("Acc is private");
+        } else if(curr instanceof BusinessAccount){
+            accType="COMPANY";
+            System.out.println("Acc is company");
+        }
+
+        /////////////////////////////////////
+
+        /////////////////////////////////////
+        return accType;
+    }
+    @FXML
+    private void createUserHasBeverages(Beverage ing) throws SQLException {
+        //TODO: Get if account is Company or Private
+        try {
+            connection = ConnectionLayer.getConnection();
+            statement = connection.createStatement();
+            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
+            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
+            if(returnAccType()=="COMPANY"){
+                prepStatement = connection.prepareStatement("INSERT INTO company_account_has_beverage (beverage_id, company_account_id) VALUES (?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
+            }
+            else if (returnAccType()=="PRIVATE"){
+                prepStatement = connection.prepareStatement("INSERT INTO private_account_has_beverage (beverage_id, private_account_id) VALUES (?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
+            }
+            prepStatement.setInt(1, beverage_id);
+            prepStatement.setInt(2, Current.environment.currentUser.getId());
+
+
+            int rowAffected = prepStatement.executeUpdate();
+            if (rowAffected == 1) {
+                System.out.println("Beverage succesfully added to the account");
+            }
+
+
+        } catch (SQLException ex) {
+            System.out.println("Exception: ");
+            ex.printStackTrace();
+        } finally {
+            ConnectionLayer.cleanUp(statement, resultSet);
+        }
+        connection.close();
+    }
+
 
     private Beverage createBeverageObject() {
         Beverage a = new Beverage(txtFieldBeverageName.getText(), countPercentage(), Double.valueOf(cost), countVolume(), addedIngredientsList2);
@@ -171,18 +221,16 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void createBeverage(Beverage beverage) throws SQLException {
 
-
         try {
             connection = ConnectionLayer.getConnection();
             statement = connection.createStatement();
-            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
-            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
             prepStatement = connection.prepareStatement("INSERT INTO beverage (name, alcohol, cost, notes) VALUES (?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             prepStatement.setString(1, beverage.getName());
             prepStatement.setInt(2, beverage.getAlcoholPercentage());
             prepStatement.setDouble(3, beverage.getCost());
-            prepStatement.setString(4, "NOTES TEST");
+            prepStatement.setString(4, "Glass: "+glass.getName()+"\nGlass volume: "
+                    +glass.getVolume()+"ml\n"+txtAreaNotes.getText());
 
 
             int rowAffected = prepStatement.executeUpdate();
@@ -209,8 +257,6 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         try {
             connection = ConnectionLayer.getConnection();
             statement = connection.createStatement();
-            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
-            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
             prepStatement = connection.prepareStatement("INSERT INTO beverage_has_ingredient (beverage_id, ingredient_id, magnitude) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             prepStatement.setInt(1, beverage_id);
@@ -220,7 +266,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
             int rowAffected = prepStatement.executeUpdate();
             if (rowAffected == 1) {
-                System.out.println("Ingredient successfully added to beverage");
+                System.out.println("Ingredient "+ ing.getName() +" successfully added to beverage");
             }
 
 

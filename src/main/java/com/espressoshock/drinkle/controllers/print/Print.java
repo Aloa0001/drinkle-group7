@@ -5,6 +5,7 @@ import com.espressoshock.drinkle.controllers.app.beverageBuilder.Glassware;
 import com.espressoshock.drinkle.models.Beverage;
 import com.espressoshock.drinkle.models.Ingredient;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
+import java.util.Iterator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -116,17 +117,23 @@ public class Print implements Initializable {
 
     public void onSendByEmail() {
         String date = Current.environment.currentDate;
-        String ingredientsText = null;
+        String beverageName = printBeverage.getName();
+        String beverageNotes = printBeverage.getNotes();
+        String beverageAlcoholPercentage = String.valueOf(printBeverage.getAlcoholPercentage());
 
-        //TODO: Check on Windows pc if it works.
-        ingredients.forEach(ingredient ->
-            ingredientsText.concat(ingredient.getName() + " ")
+        String emailIngredient = "";
+
+        for (Ingredient ingredient: ingredients) {
+            emailIngredient.concat(" ");
+            emailIngredient.concat(ingredient.getName());
+        }
+        
+        String body = String.format(
+            "Hello Drinkle user,\r\n Here is you drink data: \r\n Name: %s, \r\n Notes: %s, \r\n AlcoholPercentage: %s, \r\n Ingredients: %s, \r\n Date: %s",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date
         );
 
         try {
-
-            composeEmail("email@change.it", "Drinkle!",
-                "Hello Drinkle user,\r\n Here is you drink data: \r\n" + ingredientsText + date);
+            composeEmail("email@change.it", "Drinkle!", body);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -149,6 +156,7 @@ public class Print implements Initializable {
         }
         Runtime.getRuntime().exec(cmd);
     }
+
 
     private String uriEncode(String in) {
         String out = new String();
