@@ -129,14 +129,14 @@ public class Print implements Initializable {
         }
 
 
-        String body = "\"Hello Drinkle user,\"\n"
+        String body = String.format("\"Hello Drinkle user,\"\n"
             + "                    + \"\\r\\n Here is you drink data: \"\n"
             + "                    + \"\\r\\n Name: %s,\"\n"
             + "                    + \"\\r\\n Notes: %s,\"\n"
             + "                    + \"\\r\\n AlcoholPercentage: %s \"\n"
             + "                    + \"\\r\\n Ingredients: %s\"\n"
-            + "                    + \"\\r\\n Date: %s\",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date);";
-
+            + "                    + \"\\r\\n Date: %s\"",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date);
+        
         try {
             composeEmail("email@change.it", "Drinkle!", body);
         } catch (Exception err) {
