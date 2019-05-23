@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espressoshock.drinkle.controllers.app.AccountController">
+   <children>
+      <Pane layoutY="22.0" prefHeight="634.0" prefWidth="529.0">
+         <children>
+            <VBox layoutX="20.0" layoutY="100.0" prefHeight="270.0" prefWidth="349.0" styleClass="login-form">
+               <children>
+                  <Label alignment="CENTER" text="Account Data" textAlignment="CENTER" />
+                  <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Name:" />
+                  <TextField fx:id="nameTextField" prefHeight="34.0" prefWidth="353.0" />
+                  <Label text="Email:" />
+                  <TextField fx:id="emailTextField" prefHeight="34.0" prefWidth="353.0" />
+                  <Label text="Password:" />
+                  <TextField fx:id="passwordTextField" prefHeight="34.0" prefWidth="353.0" />
+                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="190.0" styleClass="login-btn" text="Update Info">
+                     <VBox.margin>
+                        <Insets left="-8.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
