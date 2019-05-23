@@ -1,10 +1,9 @@
 package com.espressoshock.drinkle.controllers.app.beverageBuilder;
 
+import com.espressoshock.drinkle.appState.Current;
 import com.espressoshock.drinkle.controllers.print.Print;
 import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
-import com.espressoshock.drinkle.models.Beverage;
-import com.espressoshock.drinkle.models.BrandsEnum;
-import com.espressoshock.drinkle.models.Ingredient;
+import com.espressoshock.drinkle.models.*;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
 import com.espressoshock.drinkle.viewLoader.EventDispatcherAdapter;
 import javafx.event.Event;
@@ -30,10 +29,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class BeverageBuilder extends EventDispatcherAdapter implements Initializable {
@@ -59,13 +55,15 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private ArrayList<Ingredient> choseIngredientsList2 = new ArrayList<>();
     private ArrayList<Ingredient> addedIngredientsList2 = new ArrayList<>();
     private ArrayList<Ingredient> searchList = new ArrayList<>();
+    private ArrayList<Ingredient> searchList2 = new ArrayList<>();
     private ArrayList<Glassware> choseGlasswareList = new ArrayList<>();
     private Ingredient selected = null;// selected object of ingredient
     private RingProgressIndicator alcoholPercent = new RingProgressIndicator();// <-- to be accessed in print
-    private ArrayList<String> brands = new ArrayList<>();
+    private ArrayList<String> cathegories = new ArrayList<>();
+    private String selectedCathegory = null;
     //------------------ @FXML ------------------------------
     @FXML
-    private Label lblChosenName, lblVolume, lblCost, lblTotalVolume, lblChosenGlass, lblChosenAlcohol;
+    private Label lblChosenName, lblVolume, lblCost, lblTotalVolume, lblChosenGlass, lblChosenAlcohol, lblHelp;
     @FXML
     private AnchorPane alcoholPercentCircle;
     @FXML
@@ -88,29 +86,59 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
 
     private void addBrandsToSearch() {
-        for (BrandsEnum a : BrandsEnum.values()) {
+        for (IngredientCategory a : IngredientCategory.values()) {
 //            System.out.println(a.getBrandName()); // <--- test
-            brands.add(a.getBrandName());
+            cathegories.add(a.getName());
 
         }
-        Collections.sort(brands);
+        Collections.sort(cathegories);
         MenuItem m = new MenuItem("All");
-        m.setOnAction(event -> brandsList.setText(m.getText()));
+
+        m.setOnAction(event -> {
+            searchField.setText("");
+            searchList.clear();
+            searchList2.clear();
+            vBoxListOfIngredients.getChildren().removeAll();
+            brandsList.setText(m.getText());
+            selectedCathegory = null;
+            for(Ingredient a : choseIngredientsList2){
+                searchList2.add(a);
+            }
+            IngredientAddToList(choseIngredientsList2);
+
+
+        });
         brandsList.getItems().add(m);
-        for (String s : brands) {
+        for (String s : cathegories) {
             MenuItem a = new MenuItem(s);
-            a.setOnAction(event -> brandsList.setText(a.getText()));
+            a.setOnAction(event -> {
+                searchField.setText("");
+                searchList2.clear();
+                vBoxListOfIngredients.getChildren().removeAll();
+                brandsList.setText(a.getText());
+                selectedCathegory = a.getText();
+
+                for (Ingredient y : choseIngredientsList2) {
+                    if (y.getBrand() != null && y.getBrand().getProductType().getName().equals(selectedCathegory)) {
+                        searchList2.add(y);
+                    }
+                }
+                IngredientAddToList(searchList2);
+            });
             brandsList.getItems().add(a);
         }
+
     }
 
     private void search(String string) {
         searchList.clear();
+
         vBoxListOfIngredients.getChildren().removeAll();
 
-        for (Ingredient i : choseIngredientsList2) {
+        for (Ingredient i : searchList2) {
             if (i.getName() != null && i.getName().toLowerCase().startsWith(string)) {
                 searchList.add(i);
+
             }
 
             //something here
@@ -127,7 +155,59 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         for (Ingredient a : d.getIngredients()) {
             createBeverageHasIngredients(a);
         }
+        createUserHasBeverages(d);
     }
+    public String returnAccType(){
+        String accType="";
+        Account curr = Current.environment.currentUser;
+        if(curr instanceof PrivateAccount){
+            accType="PRIVATE";
+            System.out.println("Acc is private");
+        } else if(curr instanceof BusinessAccount){
+            accType="COMPANY";
+            System.out.println("Acc is company");
+        }
+
+        /////////////////////////////////////
+
+        /////////////////////////////////////
+        return accType;
+    }
+    @FXML
+    private void createUserHasBeverages(Beverage ing) throws SQLException {
+        //TODO: Get if account is Company or Private
+        try {
+            connection = ConnectionLayer.getConnection();
+            statement = connection.createStatement();
+            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
+            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
+            if(returnAccType()=="COMPANY"){
+                prepStatement = connection.prepareStatement("INSERT INTO company_account_has_beverage (beverage_id, company_account_id) VALUES (?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
+            }
+            else if (returnAccType()=="PRIVATE"){
+                prepStatement = connection.prepareStatement("INSERT INTO private_account_has_beverage (beverage_id, private_account_id) VALUES (?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
+            }
+            prepStatement.setInt(1, beverage_id);
+            prepStatement.setInt(2, Current.environment.currentUser.getId());
+
+
+            int rowAffected = prepStatement.executeUpdate();
+            if (rowAffected == 1) {
+                System.out.println("Beverage succesfully added to the account");
+            }
+
+
+        } catch (SQLException ex) {
+            System.out.println("Exception: ");
+            ex.printStackTrace();
+        } finally {
+            ConnectionLayer.cleanUp(statement, resultSet);
+        }
+        connection.close();
+    }
+
 
     private Beverage createBeverageObject() {
         Beverage a = new Beverage(txtFieldBeverageName.getText(), countPercentage(), Double.valueOf(cost), countVolume(), addedIngredientsList2);
@@ -141,18 +221,16 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void createBeverage(Beverage beverage) throws SQLException {
 
-
         try {
             connection = ConnectionLayer.getConnection();
             statement = connection.createStatement();
-            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
-            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
             prepStatement = connection.prepareStatement("INSERT INTO beverage (name, alcohol, cost, notes) VALUES (?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             prepStatement.setString(1, beverage.getName());
             prepStatement.setInt(2, beverage.getAlcoholPercentage());
             prepStatement.setDouble(3, beverage.getCost());
-            prepStatement.setString(4, "NOTES TEST");
+            prepStatement.setString(4, "Glass: "+glass.getName()+"\nGlass volume: "
+                    +glass.getVolume()+"ml\n"+txtAreaNotes.getText());
 
 
             int rowAffected = prepStatement.executeUpdate();
@@ -179,8 +257,6 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         try {
             connection = ConnectionLayer.getConnection();
             statement = connection.createStatement();
-            //resultSet = statement.executeQuery("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
-            //"FROM ingredient,brand WHERE ingredient.brand_id=brand.id");
             prepStatement = connection.prepareStatement("INSERT INTO beverage_has_ingredient (beverage_id, ingredient_id, magnitude) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             prepStatement.setInt(1, beverage_id);
@@ -190,7 +266,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
             int rowAffected = prepStatement.executeUpdate();
             if (rowAffected == 1) {
-                System.out.println("Ingredient successfully added to beverage");
+                System.out.println("Ingredient "+ ing.getName() +" successfully added to beverage");
             }
 
 
@@ -282,7 +358,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void openPrintView(Event e) throws Exception {
         createBeverageObject();
-        Button b = (Button)e.getSource();
+        Button b = (Button) e.getSource();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/app/print-layout.fxml"));
         Stage primaryStage = new Stage();
@@ -394,6 +470,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             glassImage.setImage(image);
             IngredientAddToList(choseIngredientsList2);
             searchField.setDisable(false);
+            brandsList.setDisable(false);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Error");
@@ -538,10 +615,17 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+
+            brandsList.setText("Chose cathegory");
+            brandsList.setDisable(true);
+            searchField.setDisable(true);
             selected = null;
             glass = null;
             alcoholPercent.setProgress(0);
             vBoxChosenIngredients.getChildren().clear();
+            for (Ingredient k :addedIngredientsList2){
+                choseIngredientsList2.add(k);
+            }
             addedIngredientsList2.clear();
             slider.setMin(0.0);
             lblCost.setText("0.0");
@@ -550,6 +634,8 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             progressSeparator = 0.0;
             volumeSeparator = 0;
             costSeparator = 0;
+            txtAreaNotes.setText("");
+            txtFieldBeverageName.setText("");
             lblChosenGlass.setText("");
             lblTotalVolume.setText("");
             glassImage.setImage(null);
@@ -624,6 +710,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     @FXML
     private void addIngredientWidget() {
         if (selected != null) {
+            brandsList.setText("All");
             costSeparator = Double.valueOf(cost);
             // Test purposes only
             btnAddIngredient.setDisable(true);
@@ -673,7 +760,8 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
             slider.setDisable(true);
             removeItem.setOnAction(event -> {// removig a widget
-
+                brandsList.setText("All");
+                searchField.setText("");
                 vBoxChosenIngredients.getChildren().remove(ingredient);
                 addedIngredientsList2.remove(selected);
                 slider.setMin(countVolume());// adding back to volume removed ingredient value
@@ -686,7 +774,13 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 costSeparator = costSeparator - (selected.getPricePerLiter() * selected.getMagnitude() / 1000.00);
                 choseIngredientsList2.add(selected);
                 alcoholPercent.setProgress(countPercentage());
+
                 IngredientAddToList(choseIngredientsList2);
+                searchList.clear();
+                searchList2.clear();
+                for(Ingredient g : choseIngredientsList2){
+                    searchList2.add(g);
+                }
                 btnExport.setDisable(disableExport());
                 if (addedIngredientsList2.isEmpty()) {
                     slider.setMin(0);
@@ -709,6 +803,12 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             findSelected();
             IngredientAddToList(choseIngredientsList2);
             selected = null;
+
+            searchList.clear();
+            searchList2.clear();
+            for(Ingredient a : choseIngredientsList2){
+                searchList2.add(a);
+            }
 
             lblChosenName.setText("None");
             lblChosenAlcohol.setText("0%");
@@ -750,27 +850,31 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private void toLowerCase() {
         searchField.textProperty().addListener((ov, oldValue, newValue) -> searchField.setText(newValue.toLowerCase()));
     }
+
     @FXML
-    private void helpDialog(){
+    private void helpDialog() {
 
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/app/beverage-builder/user-manual.fxml"));
         final Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        
+        stage.initModality(Modality.NONE);
+
         Parent root = null;
         try {
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        final Scene manual = new Scene(root);
+        final Scene manual = new Scene(Objects.requireNonNull(root));
         stage.setTitle("Drinkle-User Manual");
         stage.setResizable(false);
         stage.setScene(manual);
         stage.setAlwaysOnTop(true);
         stage.show();
+        if (stage.isShowing()) {
+            lblHelp.setDisable(true);
+        }
+        stage.setOnCloseRequest(event -> lblHelp.setDisable(false));
     }
 
     @Override
@@ -798,7 +902,6 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         } catch (Exception e) {
             e.printStackTrace();
         }
-        helpDialog();
     }
 
 

@@ -4,6 +4,7 @@ import com.espressoshock.drinkle.appState.AppStatePersistence;
 import com.espressoshock.drinkle.appState.Current;
 import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
 import com.espressoshock.drinkle.models.Account;
+import com.espressoshock.drinkle.models.AccountType;
 import com.espressoshock.drinkle.models.BusinessAccount;
 import com.espressoshock.drinkle.models.PrivateAccount;
 import java.sql.Connection;
@@ -105,8 +106,6 @@ public class AuthService {
     System.out.println(Current.environment.currentUser.toString());
   }
 
-
-  public enum AccountType {Company, Private}
 
   boolean registerAccount(String email, String password, String name, AccountType accountType) {
 
