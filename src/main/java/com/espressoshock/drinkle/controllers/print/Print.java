@@ -128,26 +128,23 @@ public class Print implements Initializable {
             emailIngredient.concat(ingredient.getName());
         }
 
+
+        String body = "\"Hello Drinkle user,\"\n"
+            + "                    + \"\\r\\n Here is you drink data: \"\n"
+            + "                    + \"\\r\\n Name: %s,\"\n"
+            + "                    + \"\\r\\n Notes: %s,\"\n"
+            + "                    + \"\\r\\n AlcoholPercentage: %s \"\n"
+            + "                    + \"\\r\\n Ingredients: %s\"\n"
+            + "                    + \"\\r\\n Date: %s\",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date);";
+
         try {
-            composeEmail("email@change.it", "Drinkle!",
-                "Hello Drinkle user,"
-                    + "\r\n Here is you drink data: "
-                    + "\r\n Name: %s,"
-                    + "\r\n Notes: %s,"
-                    + "\r\n AlcoholPercentage: %s "
-                    + "\r\n Ingredients: %s"
-                    + "\r\n Date: %s",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date);
-
-
+            composeEmail("email@change.it", "Drinkle!", body);
         } catch (Exception err) {
             err.printStackTrace();
         }
     }
 
-    public void composeEmail(String receiver1, String subject1, String s,
-        String beverageName, String beverageNotes, String receiver,
-        String subject,
-        String body) throws Exception {
+    public void composeEmail(String receiver, String subject, String body) throws Exception {
 
         String mailto = "mailTo:" + receiver;
         mailto += "?subject=" + uriEncode(subject);
@@ -164,6 +161,7 @@ public class Print implements Initializable {
         }
         Runtime.getRuntime().exec(cmd);
     }
+
 
     private String uriEncode(String in) {
         String out = new String();
