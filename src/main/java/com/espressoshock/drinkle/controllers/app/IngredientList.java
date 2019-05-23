@@ -62,7 +62,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         menuBtnCategory.setDisable(true);
         menuBtnBrand.setDisable(true);
-
     }
 
     @FXML
