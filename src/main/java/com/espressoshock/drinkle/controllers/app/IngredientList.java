@@ -101,6 +101,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectCategory(ActionEvent e) {
+/*        Tooltip selectAlcoholChoice = new Tooltip("Please select first the alcohol content");
+        if(vBoxIngredients.getChildren().isEmpty()) {menuBtnCategory.setTooltip(selectAlcoholChoice);}*/
         vBoxIngredients.getChildren().clear();
         menuBtnBrand.setText("Brands");
         MenuItem selection = (MenuItem) e.getSource();
@@ -192,36 +194,43 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private void addIngredient() throws Exception {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         int ingredientID = 0;
-        int accountID = 0;
-        try {
-            ingredientID = retrieveIngredientIdFromDB(lblSelectedIngredientName.getText());
-            accountID = retrieveUserIdFromDB();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            connection = ConnectionLayer.getConnection();
-            statement = connection.createStatement();
-            String sql = "INSERT INTO company_account_has_ingredient(company_account_id, ingredient_id) VALUES(?,?)";
-            PreparedStatement pstmt = connection.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, accountID);
-            pstmt.setInt(2, ingredientID);
-            int rowAffected = pstmt.executeUpdate();
-            if (rowAffected == 1) {
-                alert.setHeaderText(lblSelectedIngredientName.getText() + " was added to your list!");
-                alert.setContentText("Ingredient " + lblSelectedIngredientName.getText() + " was added to your collection of ingredients.");
-                alert.showAndWait();
+        int accountID = 0/* Current.environment.currentUser.getId()*/;
+        if(Current.environment.currentUser instanceof BusinessAccount) {
+            try {
+                ingredientID = retrieveIngredientIdFromDB(lblSelectedIngredientName.getText());
+                accountID = retrieveUserIdFromDB();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (SQLException ex) {
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.setHeaderText("You have already the ingredient " + lblSelectedIngredientName.getText() + " in your list!");
-            alert.setContentText("Please chose another ingredient!");
+            try {
+                connection = ConnectionLayer.getConnection();
+                statement = connection.createStatement();
+                String sql = "INSERT INTO company_account_has_ingredient(company_account_id, ingredient_id) VALUES(?,?)";
+                PreparedStatement pstmt = connection.prepareStatement(sql,
+                        Statement.RETURN_GENERATED_KEYS);
+                pstmt.setInt(1, accountID);
+                pstmt.setInt(2, ingredientID);
+                int rowAffected = pstmt.executeUpdate();
+                if (rowAffected == 1) {
+                    alert.setHeaderText(lblSelectedIngredientName.getText() + " was added to your list!");
+                    alert.setContentText("Ingredient " + lblSelectedIngredientName.getText() + " was added to your collection of ingredients.");
+                    alert.showAndWait();
+                }
+            } catch (SQLException ex) {
+                alert.setAlertType(Alert.AlertType.WARNING);
+                alert.setHeaderText("You have already the ingredient " + lblSelectedIngredientName.getText() + " in your list!");
+                alert.setContentText("Please chose another ingredient!");
+                alert.showAndWait();
+            } finally {
+                ConnectionLayer.cleanUp(statement, resultSet);
+            }
+            connection.close();
+        }else{
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setHeaderText("You don't have an ingredients list !");
+            alert.setContentText("Your account does not have this option.");
             alert.showAndWait();
-        } finally {
-            ConnectionLayer.cleanUp(statement, resultSet);
         }
-        connection.close();
     }
 
     private void retrieveIngredientsFromDB() throws Exception {
