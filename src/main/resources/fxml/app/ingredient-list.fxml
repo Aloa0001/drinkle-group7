@@ -15,18 +15,14 @@
    <children>
       <ScrollPane layoutX="40.0" layoutY="103.0" prefHeight="580.0" prefWidth="400.0">
          <content>
-            <VBox fx:id="vBoxIngredients" prefHeight="1000.0" prefWidth="394.0" stylesheets="@../../css/app/ingredient-list.css" />
+            <VBox fx:id="vBoxIngredients" prefHeight="558.0" prefWidth="394.0" stylesheets="@../../css/app/ingredient-list.css" />
          </content>
       </ScrollPane>
       <Button fx:id="btnSearch" layoutX="402.0" layoutY="28.0" mnemonicParsing="false" onAction="#selectBtnSearch" prefHeight="17.0" prefWidth="56.0" text="Search">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Button fx:id="btnSimilarProduct" layoutX="661.0" layoutY="598.0" mnemonicParsing="false" onAction="#selectVbButton" prefHeight="37.0" prefWidth="200.0" text="Similar Product ">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-      <Button fx:id="btnAddIngredient" layoutX="505.0" layoutY="359.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="37.0" prefWidth="332.0" text="Add Ingredient to my list ">
+      <Button fx:id="btnAddIngredient" layoutX="500.0" layoutY="257.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="37.0" prefWidth="332.0" text="Add Ingredient to my list ">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
@@ -51,27 +47,33 @@
       </MenuButton>
       <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="28.0" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="320.0" promptText="Insert search text" />
       <Label fx:id="lblSearch" layoutX="25.0" layoutY="29.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
-      <Label layoutX="461.0" layoutY="599.0" text="Similar ingredient with" />
-      <TextField fx:id="txtSimilarWith" layoutX="454.0" layoutY="612.0" promptText="Ingredient Name ">
+      <Label layoutX="488.0" layoutY="385.0" prefHeight="17.0" prefWidth="76.0" text="Similar  with " />
+      <TextField fx:id="txtSimilarWith" layoutX="557.0" layoutY="380.0" prefHeight="27.0" prefWidth="326.0" promptText="Ingredient Name ">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></TextField>
-      <Label layoutX="506.0" layoutY="280.0" text="Alcohol" />
-      <Label layoutX="506.0" layoutY="310.0" text="Price" />
-      <ProgressBar fx:id="progressBarAlcohol" layoutX="555.0" layoutY="284.0" prefHeight="10.0" prefWidth="200.0" />
-      <ProgressBar fx:id="progressBarPrice" layoutX="555.0" layoutY="314.0" prefHeight="10.0" prefWidth="200.0" />
-      <Label fx:id="lblAlcohol" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="761.0" layoutY="280.0" prefHeight="17.0" prefWidth="34.0" textFill="#ae0f0f" />
-      <Label layoutX="798.0" layoutY="281.0" text="\%" />
-      <Label fx:id="lblPrice" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="761.0" layoutY="310.0" prefHeight="17.0" prefWidth="34.0" textFill="#105ada" />
-      <Label layoutX="798.0" layoutY="310.0" text="kr/l" />
-      <Label fx:id="lblSelectedIngredientName" alignment="CENTER" contentDisplay="CENTER" layoutX="499.0" layoutY="103.0" prefHeight="54.0" prefWidth="332.0" text=" Ingredient Name " textFill="#970505">
+      <Label layoutX="495.0" layoutY="179.0" text="Alcohol" />
+      <Label layoutX="497.0" layoutY="208.0" text="Price" />
+      <ProgressBar fx:id="progressBarAlcohol" layoutX="555.0" layoutY="184.0" prefHeight="10.0" prefWidth="200.0" />
+      <ProgressBar fx:id="progressBarPrice" layoutX="555.0" layoutY="214.0" prefHeight="10.0" prefWidth="200.0" />
+      <Label fx:id="lblAlcohol" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="755.0" layoutY="179.0" prefHeight="17.0" prefWidth="34.0" textFill="#ae0f0f" />
+      <Label layoutX="792.0" layoutY="179.0" text="\%" />
+      <Label fx:id="lblPrice" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="755.0" layoutY="210.0" prefHeight="17.0" prefWidth="34.0" textFill="#105ada" />
+      <Label layoutX="792.0" layoutY="211.0" text="kr/l" />
+      <Label fx:id="lblSelectedIngredientName" alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="62.0" prefHeight="54.0" prefWidth="332.0" text=" Ingredient Name " textFill="#970505">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="502.0" layoutY="186.0" text="Category" />
-      <Label layoutX="503.0" layoutY="217.0" text="Brand" />
-      <Label fx:id="lblIngredientCategory" layoutX="566.0" layoutY="186.0" prefHeight="17.0" prefWidth="200.0" textFill="#801111" />
-      <Label fx:id="lblIngredientBrand" layoutX="566.0" layoutY="217.0" prefHeight="17.0" prefWidth="200.0" textFill="#790d0d" />
+      <Label layoutX="494.0" layoutY="122.0" text="Category" />
+      <Label layoutX="494.0" layoutY="153.0" text="Brand" />
+      <Label fx:id="lblIngredientCategory" layoutX="564.0" layoutY="122.0" prefHeight="17.0" prefWidth="200.0" textFill="#801111" />
+      <Label fx:id="lblIngredientBrand" layoutX="564.0" layoutY="153.0" prefHeight="17.0" prefWidth="200.0" textFill="#790d0d" />
+      <ScrollPane layoutX="485.0" layoutY="401.0" prefHeight="281.0" prefWidth="400.0">
+         <content>
+            <VBox fx:id="vBoxSimilarIngredient" prefHeight="261.0" prefWidth="392.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="lblPrivateAccountWarning" layoutX="497.0" layoutY="294.0" prefHeight="28.0" prefWidth="339.0" textFill="#bc0202" />
    </children>
 </AnchorPane>

@@ -26,9 +26,9 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
 
     @FXML
-    private VBox vBoxIngredients;
+    private VBox vBoxIngredients, vBoxSimilarIngredient;
     @FXML
-    private Button btnSimilarProduct, btnSearch;
+    private Button  btnSearch, btnAddIngredient;
     @FXML
     private MenuButton menuBtnCategory, menuBtnBrand, menuBtnAlcoholOption;
     @FXML
@@ -36,11 +36,20 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     @FXML
     private ProgressBar progressBarAlcohol, progressBarPrice;
     @FXML
-    private Label lblSelectedIngredientName, lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand;
+    private Label lblSelectedIngredientName, lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand, lblPrivateAccountWarning;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        if(Current.environment.currentUser instanceof PrivateAccount){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Your Account does not have a collection of ingredients!");
+            alert.setContentText("You can visualize the ingredients but you can not add them to a private list. Your" +
+                    " account has a collection of beverages.");
+            alert.showAndWait();
+            lblPrivateAccountWarning.setText("Your account does not allow a collection of ingredients");
+            btnAddIngredient.setDisable(true);
+        }
         createCategoryList();
         populateNonAlcCategories();
         populateBrandsList();
@@ -51,6 +60,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             e.printStackTrace();
             System.out.println("Failed to populate the Ingredients list");
         }
+        menuBtnCategory.setDisable(true);
+        menuBtnBrand.setDisable(true);
 
     }
 
@@ -83,6 +94,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectAlcoholSelection(ActionEvent event) {
+        menuBtnCategory.setDisable(false);
         vBoxIngredients.getChildren().clear();
         MenuItem selection = (MenuItem) event.getSource();
         if (selection.getText().equals("Alcoholic")) {
@@ -102,6 +114,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectCategory(ActionEvent e) {
+        menuBtnBrand.setDisable(false);
         vBoxIngredients.getChildren().clear();
         menuBtnBrand.setText("Brands");
         MenuItem selection = (MenuItem) e.getSource();
@@ -138,8 +151,10 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private void selectVbButton(ActionEvent e) {
         try {
             Button selection = (Button) e.getSource();
+
             for (Ingredient x : ingredientsList) {
                 if (x.getName().equals(selection.getText())) {
+                    createSimilarIngredientList(x);
                     lblSelectedIngredientName.setText(x.getName());
                     txtSimilarWith.setText(x.getName());
                     lblAlcohol.setText(Integer.toString(x.getAlcoholPercentage()));
@@ -148,16 +163,24 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     progressBarPrice.setProgress(Double.valueOf(x.getPricePerLiter()) / 1000);
                     lblIngredientBrand.setText(x.getBrand().getBrandName());
                     lblIngredientCategory.setText(x.getBrand().getProductType().getName());
-                    for (Ingredient y : ingredientsList) {
-                        if (x.getBrand().getProductType().getName().equals(y.getBrand().getProductType().getName()) && !x.getName().equals(y.getName())) {
-                            btnSimilarProduct.setText(y.getName());
-                        }
-                    }
                 }
             }
             txtSearchOption.setText(" ");
         } catch (Exception exc) {
             exc.printStackTrace();
+        }
+    }
+
+    private void createSimilarIngredientList(Ingredient selection){
+        for (Ingredient x : ingredientsList) {
+            if (selection.getBrand().getProductType().getName().equals(x.getBrand().getProductType().getName())) {
+                Button button = new Button();
+                button.setOnAction(this::selectVbButton);
+                button.setMinWidth(400);
+                button.setMinHeight(40);
+                button.setText(x.getName());
+                vBoxSimilarIngredient.getChildren().add(button);
+            }
         }
     }
 
