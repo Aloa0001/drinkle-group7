@@ -41,6 +41,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        menuBtnBrand.setDisable(true);
+        menuBtnCategory.setDisable(true);
         if(Current.environment.currentUser instanceof PrivateAccount){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Your Account does not have a collection of ingredients!");
@@ -150,7 +152,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private void selectVbButton(ActionEvent e) {
         try {
             Button selection = (Button) e.getSource();
-
+            vBoxSimilarIngredient.getChildren().clear();
             for (Ingredient x : ingredientsList) {
                 if (x.getName().equals(selection.getText())) {
                     createSimilarIngredientList(x);
