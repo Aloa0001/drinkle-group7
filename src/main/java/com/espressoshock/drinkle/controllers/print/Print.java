@@ -5,6 +5,7 @@ import com.espressoshock.drinkle.controllers.app.beverageBuilder.Glassware;
 import com.espressoshock.drinkle.models.Beverage;
 import com.espressoshock.drinkle.models.Ingredient;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
+import java.util.Iterator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -116,23 +117,37 @@ public class Print implements Initializable {
 
     public void onSendByEmail() {
         String date = Current.environment.currentDate;
-        String ingredientsText = null;
+        String beverageName = printBeverage.getName();
+        String beverageNotes = printBeverage.getNotes();
+        String beverageAlcoholPercentage = String.valueOf(printBeverage.getAlcoholPercentage());
 
-        //TODO: Check on Windows pc if it works.
-        ingredients.forEach(ingredient ->
-            ingredientsText.concat(ingredient.getName() + " ")
-        );
+        String emailIngredient = "";
+
+        for (Ingredient ingredient: ingredients) {
+            emailIngredient.concat(" ");
+            emailIngredient.concat(ingredient.getName());
+        }
 
         try {
-
             composeEmail("email@change.it", "Drinkle!",
-                "Hello Drinkle user,\r\n Here is you drink data: \r\n" + ingredientsText + date);
+                "Hello Drinkle user,"
+                    + "\r\n Here is you drink data: "
+                    + "\r\n Name: %s,"
+                    + "\r\n Notes: %s,"
+                    + "\r\n AlcoholPercentage: %s "
+                    + "\r\n Ingredients: %s"
+                    + "\r\n Date: %s",beverageName,beverageNotes,beverageAlcoholPercentage,emailIngredient,date);
+
+
         } catch (Exception err) {
             err.printStackTrace();
         }
     }
 
-    public void composeEmail(String receiver, String subject, String body) throws Exception {
+    public void composeEmail(String receiver1, String subject1, String s,
+        String beverageName, String beverageNotes, String receiver,
+        String subject,
+        String body) throws Exception {
 
         String mailto = "mailTo:" + receiver;
         mailto += "?subject=" + uriEncode(subject);
