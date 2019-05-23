@@ -1,6 +1,6 @@
 package com.espressoshock.drinkle.controllers.auth;
 
-import com.espressoshock.drinkle.controllers.auth.AuthService.AccountType;
+import com.espressoshock.drinkle.models.AccountType;
 import com.espressoshock.drinkle.viewLoader.EventDispatcherAdapter;
 import com.espressoshock.drinkle.viewLoader.ViewLoader;
 import com.espressoshock.drinkle.viewLoader.ViewMetadata;
@@ -22,7 +22,6 @@ public class AuthRegistrationCompany extends EventDispatcherAdapter {
     setupComponents();
     setupUI();
   }
-
 
   private void setupUI() {
     errorText.setVisible(false);
@@ -56,7 +55,7 @@ public class AuthRegistrationCompany extends EventDispatcherAdapter {
             emailTextField.getText(),
             passwordTextField.getText(),
             nameTextField.getText(),
-            AccountType.Company
+            AccountType.Business
         )
     ) {
       errorText.setVisible(false);

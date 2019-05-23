@@ -16,15 +16,25 @@
          <children>
             <VBox layoutX="20.0" layoutY="100.0" prefHeight="270.0" prefWidth="349.0" styleClass="login-form">
                <children>
-                  <Label alignment="CENTER" text="Account Data" textAlignment="CENTER" />
-                  <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label alignment="CENTER" text="My Account" textAlignment="CENTER">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="accountTypeLabel" alignment="CENTER" opacity="0.81" text="logged as: " textAlignment="CENTER" underline="true">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                   <Label text="Name:" />
                   <TextField fx:id="nameTextField" prefHeight="34.0" prefWidth="353.0" />
                   <Label text="Email:" />
                   <TextField fx:id="emailTextField" prefHeight="34.0" prefWidth="353.0" />
                   <Label text="Password:" />
                   <TextField fx:id="passwordTextField" prefHeight="34.0" prefWidth="353.0" />
-                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="190.0" styleClass="login-btn" text="Update Info">
+                  <Label fx:id="updateResultLabel" text="Done!" textFill="#d01c1c" />
+                  <Button mnemonicParsing="false" onAction="#onUpdateCalled" prefHeight="47.0" prefWidth="190.0" styleClass="login-btn" text="Update Info">
                      <VBox.margin>
                         <Insets left="-8.0" />
                      </VBox.margin>
