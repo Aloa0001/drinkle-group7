@@ -235,6 +235,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                 vBoxIngredients.getChildren().add(button);
             }
         }
+        txtFieldMaxAlc.clear();
+        txtFieldMinAlc.clear();
     }
 
     private void createSimilarIngredientList(Ingredient selection){
