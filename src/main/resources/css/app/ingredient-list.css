@@ -7,7 +7,7 @@
     -fx-progress-color: red;
 }
 #btnAddIngredient,#btnSimilarProduct{
-    -fx-background-color: #788bff;
+    -fx-background-color: #334fff;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
 }
@@ -17,26 +17,26 @@
 .button:hover{
     -fx-background-color: #6eafff;
 }
-#btnSearch{
+#btnSearch,#btnSearchAlcohol{
     -fx-background-color: transparent;
     -fx-border-color: #4475ff;
     -fx-border-radius: 0 20 20 0;
 }
-#btnSearch:hover{
+#btnSearch:hover,#btnSearchAlcohol:hover{
      -fx-border-color: #ababab;
  }
-#txtSearchOption:hover{
+#txtSearchOption:hover,#txtFieldMaxAlc:hover,#txtFieldMinAlc:hover{
     -fx-border-color: #ababab;
 }
 .menu-button{
     -fx-border-color: #4475ff;
-    -fx-background-color: #ff6d33;
+    -fx-background-color: #ef4a00;
 }
 .menu-button:hover{
     -fx-background-color: #ffa275;
 }
 #txtSearchOption{
-    -fx-border-color: #4475ff;
+    -fx-border-color: grey;
 }
 #menuBtnAlcoholOption{
     -fx-background-radius: 20 0 0 20;
@@ -53,4 +53,27 @@
 #menuBtnBrand{
     -fx-background-radius: 0 20 20 0;
     -fx-border-radius: 0 20 20 0 ;
+}
+#txtFieldMinAlc,#txtFieldMaxAlc{
+    -fx-border-color: grey;
+}
+#menuBtnAccount{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+#menuBtnAccount:hover{
+    -fx-border-color: grey;
+}
+#scrollPaneView{
+    -fx-background-color: #ef4a00 ;
+}
+#vBoxBevOrIng{
+    -fx-background-color:  #ef4a00;
+}
+#btnCloseList{
+    -fx-background-color: #ef4a00;
+    -fx-border-color: #ef4a00;
+}
+#btnCloseList:hover{
+    -fx-background-color: #ffa275;
 }
