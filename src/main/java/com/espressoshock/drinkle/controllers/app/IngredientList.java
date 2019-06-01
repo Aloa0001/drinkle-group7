@@ -441,6 +441,4 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         connection.close();
     }
-
-
 }

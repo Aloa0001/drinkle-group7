@@ -77,3 +77,15 @@
 #btnCloseList:hover{
     -fx-background-color: #ffa275;
 }
+#menuBtnAlcoholOption:hover{
+    -fx-tooltip-visible: #tooltipAlcChoice;
+}
+#menuBtnCategory:hover{
+    text-outline: #tooltipCategory;
+}
+#menuBtnBrand:hover{
+    text-outline: #tooltipBrand;
+}
+#btnAddIngredient:hover{
+    text-outline: #tooltipAddIngredient;
+}

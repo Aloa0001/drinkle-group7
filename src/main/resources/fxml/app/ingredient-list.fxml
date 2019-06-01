@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
@@ -38,11 +39,17 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipCategory" text="Chose the type of ingredient" />
+         </tooltip>
       </MenuButton>
       <MenuButton fx:id="menuBtnBrand" layoutX="270.0" layoutY="109.0" mnemonicParsing="false" onAction="#selectBrand" prefHeight="27.0" prefWidth="132.0" text="Brand">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipBrand" text="All the brands of the chosen category" />
+         </tooltip>
       </MenuButton>
       <MenuButton fx:id="menuBtnAlcoholOption" layoutX="25.0" layoutY="109.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="27.0" prefWidth="113.0" text="Alc Option">
         <items>
@@ -52,6 +59,9 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipAlcChoice" text="Alcohol choice" />
+         </tooltip>
       </MenuButton>
       <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="42.0" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="249.0" promptText="Insert search text" />
       <Label fx:id="lblSearch" layoutX="25.0" layoutY="44.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
