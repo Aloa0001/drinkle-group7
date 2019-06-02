@@ -9,144 +9,140 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane layoutX="14.0" layoutY="22.0" prefHeight="652.0" prefWidth="906.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab text="My info">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="72.0" layoutY="45.0" text="Current account info:" />
-                        <Group layoutX="72.0" layoutY="70.0">
+      <Group>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="477.0" layoutX="267.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" width="599.0" />
+            <TabPane layoutX="14.0" layoutY="22.0" prefHeight="652.0" prefWidth="906.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                  <Tab text="My info">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label text="Name:" />
-                              <Label layoutX="60.0" text="Label" />
+                              <Label layoutX="72.0" layoutY="45.0" text="Current account info:" />
+                              <Group layoutX="72.0" layoutY="70.0">
+                                 <children>
+                                    <Label text="Name:" />
+                                    <Label layoutX="60.0" text="Label" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="72.0" layoutY="97.0">
+                                 <children>
+                                    <Label text="E-mail:" />
+                                    <Label layoutX="60.0" text="Label" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="72.0" layoutY="124.0">
+                                 <children>
+                                    <Label text="Password:" />
+                                    <Label layoutX="60.0" text="Label" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="72.0" layoutY="192.0">
+                                 <children>
+                                    <Label text="Name:" />
+                                    <TextField layoutY="24.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="72.0" layoutY="252.0">
+                                 <children>
+                                    <Label text="E-mail:" />
+                                    <TextField layoutY="24.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="72.0" layoutY="318.0">
+                                 <children>
+                                    <Label text="Password:" />
+                                    <TextField layoutY="24.0" />
+                                 </children>
+                              </Group>
+                              <Button layoutX="72.0" layoutY="393.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="Update info" />
+                              <TabPane layoutX="257.0" layoutY="19.0" prefHeight="471.0" prefWidth="592.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                    <Tab text="My beverages">
+                                       <content>
+                                          <AnchorPane>
+                                             <children>
+                                                <Group id="My Stuff" layoutX="12.0" layoutY="1.0">
+                                                   <children>
+                                                      <ScrollPane layoutY="23.0">
+                                                         <content>
+                                                            <VBox prefHeight="402.0" prefWidth="173.0" />
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <Label layoutX="43.0" text="My beverages" />
+                                                   </children>
+                                                </Group>
+                                                <Group id="Preview" layoutX="181.0" layoutY="1.0">
+                                                   <children>
+                                                      <ScrollPane layoutX="26.0" layoutY="23.0">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="370.0" />
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <Label layoutX="38.0" text="Preview" />
+                                                   </children>
+                                                </Group>
+                                                <Button layoutX="233.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Delete from my list" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab text="My ingredients">
+                                       <content>
+                                          <AnchorPane>
+                                             <children>
+                                                <Group id="My Stuff" layoutX="12.0" layoutY="1.0">
+                                                   <children>
+                                                      <ScrollPane layoutY="23.0">
+                                                         <content>
+                                                            <VBox prefHeight="402.0" prefWidth="173.0" />
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <Label layoutX="63.0" text="My ingredients" />
+                                                   </children>
+                                                </Group>
+                                                <Button layoutX="233.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Delete from my list" />
+                                                <Group layoutX="205.0" layoutY="25.0">
+                                                   <children>
+                                                      <Label text="Ingredient name:" />
+                                                      <Label layoutX="95.0" text="Name" />
+                                                   </children>
+                                                </Group>
+                                                <Group layoutX="205.0" layoutY="50.0">
+                                                   <children>
+                                                      <Label text="Ingredient name:" />
+                                                      <Label layoutX="95.0" text="Name" />
+                                                   </children>
+                                                </Group>
+                                                <Group layoutX="205.0" layoutY="75.0">
+                                                   <children>
+                                                      <Label text="Ingredient name:" />
+                                                      <Label layoutX="95.0" text="Name" />
+                                                   </children>
+                                                </Group>
+                                                <Group layoutX="205.0" layoutY="101.0">
+                                                   <children>
+                                                      <Label text="Ingredient name:" />
+                                                      <Label layoutX="95.0" text="Name" />
+                                                   </children>
+                                                </Group>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
                            </children>
-                        </Group>
-                        <Group layoutX="72.0" layoutY="97.0">
-                           <children>
-                              <Label text="E-mail:" />
-                              <Label layoutX="60.0" text="Label" />
-                           </children>
-                        </Group>
-                        <Group layoutX="72.0" layoutY="124.0">
-                           <children>
-                              <Label text="Password:" />
-                              <Label layoutX="60.0" text="Label" />
-                           </children>
-                        </Group>
-                        <Group layoutX="72.0" layoutY="192.0">
-                           <children>
-                              <Label text="Name:" />
-                              <TextField layoutY="24.0" />
-                           </children>
-                        </Group>
-                        <Group layoutX="72.0" layoutY="252.0">
-                           <children>
-                              <Label text="E-mail:" />
-                              <TextField layoutY="24.0" />
-                           </children>
-                        </Group>
-                        <Group layoutX="72.0" layoutY="318.0">
-                           <children>
-                              <Label text="Password:" />
-                              <TextField layoutY="24.0" />
-                           </children>
-                        </Group>
-                        <Button layoutX="72.0" layoutY="393.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="Update info" />
-                        <TabPane layoutX="257.0" layoutY="19.0" prefHeight="471.0" prefWidth="592.0" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                              <Tab text="My beverages">
-                                 <content>
-                                    <AnchorPane>
-                                       <children>
-                                          <Group id="My Stuff" layoutX="12.0" layoutY="1.0">
-                                             <children>
-                                                <ScrollPane layoutY="23.0">
-                                                   <content>
-                                                      <VBox prefHeight="402.0" prefWidth="173.0" />
-                                                   </content>
-                                                </ScrollPane>
-                                                <Label layoutX="63.0" text="My beverages" />
-                                             </children>
-                                          </Group>
-                                          <Group id="Search" layoutX="209.0" layoutY="1.0">
-                                             <children>
-                                                <ScrollPane layoutY="23.0">
-                                                   <content>
-                                                      <VBox prefHeight="300.0" prefWidth="173.0" />
-                                                   </content>
-                                                </ScrollPane>
-                                                <Label layoutX="53.0" text="serach" />
-                                             </children>
-                                          </Group>
-                                          <Group id="Preview" layoutX="380.0" layoutY="1.0">
-                                             <children>
-                                                <ScrollPane layoutX="26.0" layoutY="23.0">
-                                                   <content>
-                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="173.0" />
-                                                   </content>
-                                                </ScrollPane>
-                                                <Label layoutX="38.0" text="Preview" />
-                                             </children>
-                                          </Group>
-                                          <Button layoutX="233.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Delete from my list" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab text="My ingredients">
-                                 <content>
-                                    <AnchorPane>
-                                       <children>
-                                          <Group id="My Stuff" layoutX="12.0" layoutY="1.0">
-                                             <children>
-                                                <ScrollPane layoutY="23.0">
-                                                   <content>
-                                                      <VBox prefHeight="402.0" prefWidth="173.0" />
-                                                   </content>
-                                                </ScrollPane>
-                                                <Label layoutX="63.0" text="My ingredients" />
-                                             </children>
-                                          </Group>
-                                          <Button layoutX="233.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Delete from my list" />
-                                          <Group layoutX="205.0" layoutY="25.0">
-                                             <children>
-                                                <Label text="Ingredient name:" />
-                                                <Label layoutX="95.0" text="Name" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="205.0" layoutY="50.0">
-                                             <children>
-                                                <Label text="Ingredient name:" />
-                                                <Label layoutX="95.0" text="Name" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="205.0" layoutY="75.0">
-                                             <children>
-                                                <Label text="Ingredient name:" />
-                                                <Label layoutX="95.0" text="Name" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="205.0" layoutY="101.0">
-                                             <children>
-                                                <Label text="Ingredient name:" />
-                                                <Label layoutX="95.0" text="Name" />
-                                             </children>
-                                          </Group>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                          </tabs>
-                        </TabPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </Group>
    </children>
 </AnchorPane>
