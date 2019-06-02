@@ -23,26 +23,32 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     private ArrayList<BrandsEnum> brandsList = new ArrayList<>();
     private ArrayList<IngredientCategory> categoriesAlc = new ArrayList<>();
     private ArrayList<IngredientCategory> categoryNonAlc = new ArrayList<>();
+    private ArrayList<String> accountBeverages = new ArrayList<>();
+    private ArrayList<String> accountIngredients = new ArrayList<>();
 
 
     @FXML
-    private VBox vBoxIngredients, vBoxSimilarIngredient;
+    private VBox vBoxIngredients, vBoxSimilarIngredient,vBoxBevOrIng;
     @FXML
-    private Button  btnSearch, btnAddIngredient;
+    private Button  btnSearch, btnAddIngredient, btnCloseList;
     @FXML
-    private MenuButton menuBtnCategory, menuBtnBrand, menuBtnAlcoholOption;
+    private MenuButton menuBtnCategory, menuBtnBrand, menuBtnAlcoholOption,menuBtnAccount;
     @FXML
-    private TextField txtSearchOption, txtSimilarWith;
+    private TextField txtSearchOption, txtSimilarWith, txtFieldMinAlc, txtFieldMaxAlc;
     @FXML
     private ProgressBar progressBarAlcohol, progressBarPrice;
     @FXML
-    private Label lblSelectedIngredientName, lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand, lblPrivateAccountWarning;
+    private Label lblSelectedIngredientName, lblIngredientCategory, lblAlcohol, lblPrice, lblIngredientBrand, lblPrivateAccountWarning, lblNoBeverages, lblNoIngredients;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        menuBtnAccount.setText(Current.environment.currentUser.getEmail());
         menuBtnBrand.setDisable(true);
         menuBtnCategory.setDisable(true);
+        btnCloseList.setDisable(true);
+
+
         if(Current.environment.currentUser instanceof PrivateAccount){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Your Account does not have a collection of ingredients!");
@@ -56,6 +62,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         populateNonAlcCategories();
         populateBrandsList();
         try {
+            setAccountIngredients();
+            setAccountBeverges();
             retrieveIngredientsFromDB();
             System.out.println("Ingredients list populated");
         } catch (Exception e) {
@@ -66,6 +74,9 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     @FXML
     private void selectBtnSearch() {
+        txtFieldMaxAlc.clear();
+        txtFieldMinAlc.clear();
+        menuBtnAlcoholOption.setText("Alc Option");
         vBoxIngredients.getChildren().clear();
         String text = txtSearchOption.getText().toLowerCase();
         for (Ingredient x : ingredientsList) {
@@ -88,9 +99,9 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         menuBtnBrand.setText("Brand");
         menuBtnCategory.setText("Category");
+        txtSearchOption.clear();
         btnSearch.setDisable(false);
     }
-
     @FXML
     private void selectAlcoholSelection(ActionEvent event) {
         menuBtnCategory.setDisable(false);
@@ -110,7 +121,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             vBoxIngredients.getChildren().clear();
         }
     }
-
     @FXML
     private void selectCategory(ActionEvent e) {
 
@@ -130,9 +140,13 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             }
         }
     }
-
     @FXML
     private void selectBrand(ActionEvent e) {
+        txtFieldMaxAlc.clear();
+        txtFieldMinAlc.clear();
+        txtSearchOption.clear();
+        menuBtnBrand.setText("Brand");
+        menuBtnCategory.setText("Category");
         MenuItem selection = (MenuItem) e.getSource();
         menuBtnBrand.setText(selection.getText());
         vBoxIngredients.getChildren().clear();
@@ -147,7 +161,6 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             }
         }
     }
-
     @FXML
     private void selectVbButton(ActionEvent e) {
         try {
@@ -166,9 +179,71 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
                     lblIngredientCategory.setText(x.getBrand().getProductType().getName());
                 }
             }
-            txtSearchOption.setText(" ");
+            txtSearchOption.clear();
         } catch (Exception exc) {
             exc.printStackTrace();
+        }
+    }
+    @FXML
+    private void showIngredientsOrBeveragesList(ActionEvent e){
+        MenuItem selectedList = (MenuItem) e.getSource();
+        vBoxBevOrIng.getChildren().clear();
+        btnCloseList.setDisable(false);
+        if(selectedList.getText().equals("View your list of beverages")){
+            Label beverage = new Label("Beverages  :");
+            Label line = new Label("--------------");
+            vBoxBevOrIng.getChildren().addAll(beverage,line);
+            for(String beverages: accountBeverages) {
+                Label label = new Label(beverages);
+                label.setMinWidth(100);
+                label.setMinHeight(20);
+                vBoxBevOrIng.getChildren().add(label);
+            }
+        }else{
+            Label ingred = new Label("Ingredients :");
+            Label line = new Label("--------------");
+            vBoxBevOrIng.getChildren().addAll(ingred,line);
+            for(String ingredient: accountIngredients){
+                Label label = new Label(ingredient);
+                label.setMinWidth(100);
+                label.setMinHeight(20);
+                vBoxBevOrIng.getChildren().add(label);
+            }
+        }
+
+    }
+    @FXML
+    private void selectCloseList(){
+        vBoxBevOrIng.getChildren().clear();
+        btnCloseList.setDisable(true);
+    }
+    @FXML
+    private void searcByAlcohol(){
+        txtSearchOption.clear();
+        menuBtnBrand.setText("Brands");
+        menuBtnCategory.setText("Category");
+        vBoxIngredients.getChildren().clear();
+        try{
+            int min = Integer.parseInt(txtFieldMinAlc.getText());
+            int max = Integer.parseInt(txtFieldMaxAlc.getText());
+            for (Ingredient x : ingredientsList) {
+                if (x.getAlcoholPercentage() < max && x.getAlcoholPercentage() > min) {
+                    Button button = new Button();
+                    button.setOnAction(this::selectVbButton);
+                    button.setMinWidth(400);
+                    button.setMinHeight(40);
+                    button.setText(x.getName());
+                    vBoxIngredients.getChildren().add(button);
+                }
+            }
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please enter integers for alcohol options");
+            alert.setHeaderText("Wrong input! ");
+            alert.showAndWait();
+        }finally {
+            txtFieldMaxAlc.clear();
+            txtFieldMinAlc.clear();
         }
     }
 
@@ -254,6 +329,12 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             alert.setContentText("Your account does not have this option.");
             alert.showAndWait();
         }
+        try{
+        setAccountIngredients();
+        setAccountBeverges();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void retrieveIngredientsFromDB() throws Exception {
@@ -324,5 +405,50 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         connection.close();
         return user_id;
+    }
+
+    private void setAccountBeverges()throws Exception{
+
+        int beverages= 0;
+        try {
+            connection = ConnectionLayer.getConnection();
+            statement = connection.createStatement();
+            String query = String.format("select beverage.name from company_account_has_beverage, beverage, company_account where company_account_has_beverage.beverage_id = beverage.id\n" +
+                    "and company_account_has_beverage.company_account_id = company_account.id and company_account.email = '%s';", Current.environment.currentUser.getEmail());
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                accountBeverages.add(resultSet.getString(1));
+                beverages ++;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Exception: ");
+            ex.printStackTrace();
+        } finally {
+            lblNoBeverages.setText(Integer.toString(beverages));
+            ConnectionLayer.cleanUp(statement, resultSet);
+        }
+        connection.close();
+    }
+
+    private void setAccountIngredients()throws Exception{
+        int ingredients = 0;
+        try {
+            connection = ConnectionLayer.getConnection();
+            statement = connection.createStatement();
+            String query = String.format("select ingredient.name from company_account_has_ingredient, ingredient, company_account where company_account_has_ingredient.ingredient_id = ingredient.id\n" +
+                    "and company_account_has_ingredient.company_account_id = company_account.id and company_account.email = '%s';", Current.environment.currentUser.getEmail());
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                accountIngredients.add(resultSet.getString(1));
+                ingredients ++;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Exception: ");
+            ex.printStackTrace();
+        } finally {
+            lblNoIngredients.setText(Integer.toString(ingredients));
+            ConnectionLayer.cleanUp(statement, resultSet);
+        }
+        connection.close();
     }
 }

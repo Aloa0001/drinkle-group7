@@ -7,36 +7,51 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="694.0" maxWidth="935.0" minHeight="694.0" minWidth="935.0" prefHeight="694.0" prefWidth="935.0" styleClass="view-white-bg, view-page" stylesheets="@../../css/app/ingredient-list.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espressoshock.drinkle.controllers.app.IngredientList">
    <children>
-      <ScrollPane layoutX="40.0" layoutY="103.0" prefHeight="580.0" prefWidth="400.0">
+      <ProgressBar fx:id="progressBarAlcohol" layoutX="500.0" layoutY="184.0" prefHeight="10.0" prefWidth="200.0" />
+      <ProgressBar fx:id="progressBarPrice" layoutX="500.0" layoutY="214.0" prefHeight="10.0" prefWidth="200.0" />
+      <Button fx:id="btnAddIngredient" layoutX="445.0" layoutY="257.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="37.0" prefWidth="326.0" text="Add Ingredient to my list " textFill="#f5eded">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <ScrollPane layoutX="430.0" layoutY="401.0" prefHeight="281.0" prefWidth="339.0">
          <content>
-            <VBox fx:id="vBoxIngredients" prefHeight="558.0" prefWidth="394.0" stylesheets="@../../css/app/ingredient-list.css" />
+            <VBox fx:id="vBoxSimilarIngredient" prefHeight="276.0" prefWidth="349.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="btnSearch" layoutX="402.0" layoutY="28.0" mnemonicParsing="false" onAction="#selectBtnSearch" prefHeight="17.0" prefWidth="56.0" text="Search">
+      <ScrollPane layoutX="29.0" layoutY="145.0" prefHeight="538.0" prefWidth="361.0">
+         <content>
+            <VBox fx:id="vBoxIngredients" prefHeight="369.0" prefWidth="355.0" stylesheets="@../../css/app/ingredient-list.css" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="btnSearch" layoutX="332.0" layoutY="42.0" mnemonicParsing="false" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="65.0" text="Search">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Button fx:id="btnAddIngredient" layoutX="500.0" layoutY="257.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="37.0" prefWidth="332.0" text="Add Ingredient to my list ">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-      <MenuButton fx:id="menuBtnCategory" layoutX="138.0" layoutY="62.0" mnemonicParsing="false" onAction="#selectCategory" popupSide="RIGHT" prefHeight="27.0" prefWidth="159.0" text="Category">
+      <MenuButton fx:id="menuBtnCategory" layoutX="138.0" layoutY="109.0" mnemonicParsing="false" onAction="#selectCategory" popupSide="RIGHT" prefHeight="27.0" prefWidth="132.0" text="Category">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipCategory" text="Chose the type of ingredient" />
+         </tooltip>
       </MenuButton>
-      <MenuButton fx:id="menuBtnBrand" layoutX="297.0" layoutY="62.0" mnemonicParsing="false" onAction="#selectBrand" prefHeight="27.0" prefWidth="159.0" text="Brand">
+      <MenuButton fx:id="menuBtnBrand" layoutX="270.0" layoutY="109.0" mnemonicParsing="false" onAction="#selectBrand" prefHeight="27.0" prefWidth="132.0" text="Brand">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipBrand" text="All the brands of the chosen category" />
+         </tooltip>
       </MenuButton>
-      <MenuButton fx:id="menuBtnAlcoholOption" layoutX="25.0" layoutY="62.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="27.0" prefWidth="113.0" text="Alc Option">
+      <MenuButton fx:id="menuBtnAlcoholOption" layoutX="25.0" layoutY="109.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="27.0" prefWidth="113.0" text="Alc Option">
         <items>
           <MenuItem fx:id="menuItAlc" mnemonicParsing="false" onAction="#selectAlcoholSelection" text="Alcoholic" />
           <MenuItem fx:id="menuItNonAlc" mnemonicParsing="false" onAction="#selectAlcoholSelection" text="Non Alcoholic" />
@@ -44,36 +59,104 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <tooltip>
+            <Tooltip fx:id="tooltipAlcChoice" text="Alcohol choice" />
+         </tooltip>
       </MenuButton>
-      <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="28.0" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="320.0" promptText="Insert search text" />
-      <Label fx:id="lblSearch" layoutX="25.0" layoutY="29.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
-      <Label layoutX="488.0" layoutY="385.0" prefHeight="17.0" prefWidth="76.0" text="Similar  with " />
-      <TextField fx:id="txtSimilarWith" layoutX="557.0" layoutY="380.0" prefHeight="27.0" prefWidth="326.0" promptText="Ingredient Name ">
+      <TextField fx:id="txtSearchOption" layoutX="82.0" layoutY="42.0" onAction="#selectBtnSearch" prefHeight="28.0" prefWidth="249.0" promptText="Insert search text" />
+      <Label fx:id="lblSearch" layoutX="25.0" layoutY="44.0" prefHeight="25.0" prefWidth="58.0" text="Search for " />
+      <Label layoutX="433.0" layoutY="385.0" prefHeight="17.0" prefWidth="76.0" text="Similar  with ">
          <font>
-            <Font name="System Bold Italic" size="12.0" />
-         </font></TextField>
-      <Label layoutX="495.0" layoutY="179.0" text="Alcohol" />
-      <Label layoutX="497.0" layoutY="208.0" text="Price" />
-      <ProgressBar fx:id="progressBarAlcohol" layoutX="555.0" layoutY="184.0" prefHeight="10.0" prefWidth="200.0" />
-      <ProgressBar fx:id="progressBarPrice" layoutX="555.0" layoutY="214.0" prefHeight="10.0" prefWidth="200.0" />
-      <Label fx:id="lblAlcohol" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="755.0" layoutY="179.0" prefHeight="17.0" prefWidth="34.0" textFill="#ae0f0f" />
-      <Label layoutX="792.0" layoutY="179.0" text="\%" />
-      <Label fx:id="lblPrice" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="755.0" layoutY="210.0" prefHeight="17.0" prefWidth="34.0" textFill="#105ada" />
-      <Label layoutX="792.0" layoutY="211.0" text="kr/l" />
-      <Label fx:id="lblSelectedIngredientName" alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="62.0" prefHeight="54.0" prefWidth="332.0" text=" Ingredient Name " textFill="#970505">
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="440.0" layoutY="179.0" text="Alcohol">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="442.0" layoutY="208.0" text="Price">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <SVGPath fx:id="highlight" blendMode="DARKEN" content="M46.380,7.500 C117.087,7.500 187.793,7.500 258.500,7.500 C258.500,232.167 258.500,456.833 258.500,681.500 C258.500,692.546 250.277,701.500 240.135,701.500 C175.550,701.500 110.965,701.500 46.380,701.500 C2.596,468.119 -12.939,237.371 46.380,7.500 Z" fill="#ef4a00" layoutX="676.0" layoutY="-8.0" strokeLineCap="BUTT" />
+      <Label fx:id="lblIngredientCategory" layoutX="509.0" layoutY="122.0" prefHeight="17.0" prefWidth="200.0" textFill="#801111">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblIngredientBrand" layoutX="509.0" layoutY="153.0" prefHeight="17.0" prefWidth="200.0" textFill="#790d0d">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblPrivateAccountWarning" layoutX="442.0" layoutY="294.0" prefHeight="28.0" prefWidth="339.0" textFill="#bc0202" />
+      <Label fx:id="lblSelectedIngredientName" contentDisplay="CENTER" layoutX="423.0" layoutY="62.0" prefHeight="54.0" prefWidth="415.0" text=" Ingredient Name " textFill="#250303">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="494.0" layoutY="122.0" text="Category" />
-      <Label layoutX="494.0" layoutY="153.0" text="Brand" />
-      <Label fx:id="lblIngredientCategory" layoutX="564.0" layoutY="122.0" prefHeight="17.0" prefWidth="200.0" textFill="#801111" />
-      <Label fx:id="lblIngredientBrand" layoutX="564.0" layoutY="153.0" prefHeight="17.0" prefWidth="200.0" textFill="#790d0d" />
-      <ScrollPane layoutX="485.0" layoutY="401.0" prefHeight="281.0" prefWidth="400.0">
+      <Label fx:id="lblAlcohol" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="700.0" layoutY="179.0" prefHeight="17.0" prefWidth="34.0" textFill="#1b0909">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="737.0" layoutY="179.0" text="\%" textFill="#1b0909">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblPrice" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="700.0" layoutY="210.0" prefHeight="17.0" prefWidth="34.0" textFill="#1b0909">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="737.0" layoutY="211.0" text="kr/l" textFill="#1b0909">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="439.0" layoutY="122.0" text="Category">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="439.0" layoutY="153.0" text="Brand">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="txtSimilarWith" layoutX="502.0" layoutY="376.0" prefHeight="27.0" prefWidth="326.0" promptText="Ingredient Name ">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font></TextField>
+      <Label layoutX="26.0" layoutY="81.0" text="Search by alcohol percentag:     From " />
+      <Label layoutX="270.0" layoutY="82.0" text=" to" />
+      <TextField fx:id="txtFieldMinAlc" layoutX="230.0" layoutY="74.0" prefHeight="28.0" prefWidth="40.0" promptText="min" />
+      <TextField fx:id="txtFieldMaxAlc" layoutX="292.0" layoutY="76.0" prefHeight="28.0" prefWidth="40.0" promptText="max" />
+      <Button fx:id="btnSearchAlcohol" layoutX="332.0" layoutY="76.0" mnemonicParsing="false" onAction="#searcByAlcohol" prefHeight="28.0" prefWidth="65.0" text="Search">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="881.0" layoutY="3.0" prefHeight="41.0" prefWidth="48.0" text="🖱">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="21.0" text="Different searching criteria :">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <MenuButton fx:id="menuBtnAccount" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="488.0" layoutY="9.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="41.0" prefWidth="400.0" text="Account">
+        <items>
+          <MenuItem fx:id="menuItemPersonalData" mnemonicParsing="false" onAction="#showIngredientsOrBeveragesList" text="View your list of beverages" />
+          <MenuItem fx:id="menuItemIngredientsView" mnemonicParsing="false" onAction="#showIngredientsOrBeveragesList" text="View your list of ingredients" />
+        </items>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </MenuButton>
+      <Label layoutX="832.0" layoutY="54.0" text="Beverages :" />
+      <Label layoutX="832.0" layoutY="75.0" text="Ingredients :" />
+      <Label fx:id="lblNoBeverages" alignment="CENTER_RIGHT" layoutX="898.0" layoutY="55.0" prefHeight="17.0" prefWidth="32.0" text="0" />
+      <Label fx:id="lblNoIngredients" alignment="CENTER_RIGHT" layoutX="896.0" layoutY="76.0" prefHeight="17.0" prefWidth="34.0" text="0" />
+      <ScrollPane fx:id="scrollPaneView" layoutX="789.0" layoutY="110.0" prefHeight="527.0" prefWidth="138.0">
          <content>
-            <VBox fx:id="vBoxSimilarIngredient" prefHeight="261.0" prefWidth="392.0" />
+            <VBox fx:id="vBoxBevOrIng" prefHeight="525.0" prefWidth="136.0" />
          </content>
       </ScrollPane>
-      <Label fx:id="lblPrivateAccountWarning" layoutX="497.0" layoutY="294.0" prefHeight="28.0" prefWidth="339.0" textFill="#bc0202" />
+      <Button fx:id="btnCloseList" layoutX="789.0" layoutY="655.0" mnemonicParsing="false" onAction="#selectCloseList" prefHeight="25.0" prefWidth="138.0" stylesheets="@../../css/app/ingredient-list.css" text="Close List" />
    </children>
 </AnchorPane>
