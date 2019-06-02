@@ -238,7 +238,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
             }
         }catch(Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Please eneter integers for alcohol options");
+            alert.setContentText("Please enter integers for alcohol options");
             alert.setHeaderText("Wrong input! ");
             alert.showAndWait();
         }finally {
