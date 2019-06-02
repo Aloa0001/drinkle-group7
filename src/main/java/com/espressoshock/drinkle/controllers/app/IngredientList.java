@@ -223,20 +223,28 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         menuBtnBrand.setText("Brands");
         menuBtnCategory.setText("Category");
         vBoxIngredients.getChildren().clear();
-        int min = Integer.parseInt(txtFieldMinAlc.getText());
-        int max = Integer.parseInt(txtFieldMaxAlc.getText());
-        for (Ingredient x : ingredientsList) {
-            if (x.getAlcoholPercentage() < max && x.getAlcoholPercentage() > min) {
-                Button button = new Button();
-                button.setOnAction(this::selectVbButton);
-                button.setMinWidth(400);
-                button.setMinHeight(40);
-                button.setText(x.getName());
-                vBoxIngredients.getChildren().add(button);
+        try{
+            int min = Integer.parseInt(txtFieldMinAlc.getText());
+            int max = Integer.parseInt(txtFieldMaxAlc.getText());
+            for (Ingredient x : ingredientsList) {
+                if (x.getAlcoholPercentage() < max && x.getAlcoholPercentage() > min) {
+                    Button button = new Button();
+                    button.setOnAction(this::selectVbButton);
+                    button.setMinWidth(400);
+                    button.setMinHeight(40);
+                    button.setText(x.getName());
+                    vBoxIngredients.getChildren().add(button);
+                }
             }
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please eneter integers for alcohol options");
+            alert.setHeaderText("Wrong input! ");
+            alert.showAndWait();
+        }finally {
+            txtFieldMaxAlc.clear();
+            txtFieldMinAlc.clear();
         }
-        txtFieldMaxAlc.clear();
-        txtFieldMinAlc.clear();
     }
 
     private void createSimilarIngredientList(Ingredient selection){
