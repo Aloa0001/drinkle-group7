@@ -6,6 +6,7 @@ import com.espressoshock.drinkle.databaseLayer.ConnectionLayer;
 import com.espressoshock.drinkle.models.*;
 import com.espressoshock.drinkle.progressIndicator.RingProgressIndicator;
 import com.espressoshock.drinkle.viewLoader.EventDispatcherAdapter;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,8 +51,11 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private Beverage bvg = null; // declared public static so that print can access it
     private int beverage_id = 0;
     private Glassware glass = null; // declared public static so that print can access it
+    boolean pressed = false;
 
     //------------------------------------------------------
+    private ArrayList<Ingredient> myList = new ArrayList<>();
+    private ArrayList<Ingredient> myListCopy = new ArrayList<>();
     private ArrayList<Ingredient> choseIngredientsList2 = new ArrayList<>();
     private ArrayList<Ingredient> addedIngredientsList2 = new ArrayList<>();
     private ArrayList<Ingredient> searchList = new ArrayList<>();
@@ -82,6 +86,8 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private ImageView glassImage;
     @FXML
     private MenuButton brandsList;
+    @FXML
+    private RadioButton mylistButton;
     //---------------------- code -------------------------------
 
 
@@ -278,9 +284,75 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         }
         connection.close();
     }
+    @FXML
+    private void mylistPressed(){
+        if(!pressed){
+            pressed=true;
+            myListCopy.clear();
+            for(Ingredient a : choseIngredientsList2){
+                myListCopy.add(a);
+            }
+            choseIngredientsList2.clear();
+            for(Ingredient b : myList){
+                choseIngredientsList2.add(b);
+            }
+            IngredientAddToList(myList);
 
-    private void loadIngredientsFromDB() throws SQLException {
+        } else if(pressed){
+            pressed = false;
+            choseIngredientsList2.clear();
+            for(Ingredient a : myListCopy){
+                choseIngredientsList2.add(a);
+            }
+            IngredientAddToList(choseIngredientsList2);
+        }
+        System.out.println(pressed);
+
+    }
+    private void loadIngredientsMyList() throws SQLException {
         int id_ing;
+        String name;
+        int alcohol;
+        int price_per_litre;
+        int brand_id;
+        String brand;
+        try {
+            connection = ConnectionLayer.getConnection();
+            prepStatement = connection.prepareStatement("SELECT ingredient.id,ingredient.name,ingredient.alcohol,ingredient.price_per_litre,ingredient.brand_id,brand.name " +
+                    "FROM company_account_has_ingredient,ingredient,brand WHERE company_account_has_ingredient.company_account_id = ? and company_account_has_ingredient.ingredient_id=ingredient.id and ingredient.brand_id=brand.id");
+            prepStatement.setString(1,Current.environment.currentUser.getId().toString());
+            resultSet = prepStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                id_ing = resultSet.getInt(1);
+                name = resultSet.getString(2);
+                alcohol = resultSet.getInt(3);
+                price_per_litre = resultSet.getInt(4);
+                brand = resultSet.getString(6);
+                BrandsEnum brandEnum = BrandsEnum.fromString(brand);
+
+//            System.out.println(resultSet.getString("id") +
+//                    resultSet.getString("name")+
+//                    resultSet.getString("alcohol")+
+//                    resultSet.getString("price_per_litre"));
+//                System.out.printf("id: %d, name: %s, alcohol: %d, price: %d\n", id, name, alcohol, price_per_litre);
+                Ingredient b = new Ingredient(name, alcohol, price_per_litre / 10, brandEnum, 0);
+                b.setId(id_ing);
+                myList.add(b);
+                System.out.println(b.getName());
+            }
+        } catch (SQLException ex) {
+            System.out.println("Exception: ");
+            ex.printStackTrace();
+        } finally {
+            ConnectionLayer.cleanUp(statement, resultSet);
+        }
+        connection.close();
+
+    }
+    private void loadIngredientsFromDB() throws SQLException {
+        int id_ingred;
         String name;
         int alcohol;
         int price_per_litre;
@@ -294,22 +366,16 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
 
 
             while (resultSet.next()) {
-                id_ing = resultSet.getInt(1);
+                id_ingred = resultSet.getInt(1);
                 name = resultSet.getString(2);
                 alcohol = resultSet.getInt(3);
                 price_per_litre = resultSet.getInt(4);
                 brand = resultSet.getString(6);
 
-                BrandsEnum brandEnum = BrandsEnum.fromString(brand);
+                BrandsEnum brands = BrandsEnum.fromString(brand);
 
-//            System.out.println(resultSet.getString("id") +
-//                    resultSet.getString("name")+
-//                    resultSet.getString("alcohol")+
-//                    resultSet.getString("price_per_litre"));
-                //System.out.printf("id: %d, name: %s, alcohol: %d, price: %d\n", id, name, alcohol, price_per_litre);
-                Ingredient i = new Ingredient(name, alcohol, price_per_litre / 10, brandEnum, 0);
-                i.setId(id_ing);
-                //System.out.println(i);
+                Ingredient i = new Ingredient(name, alcohol, price_per_litre / 10, brands, 0);
+                i.setId(id_ingred);
                 choseIngredientsList2.add(i);
             }
         } catch (SQLException ex) {
@@ -380,14 +446,33 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     }
 
     private void findSelected() {
+        int ingId = selected.getId();
         Ingredient sel = null;
+        Ingredient sela = null;
+        Ingredient selb = null;
+        for (Ingredient b : myListCopy) {
+            if (b.getId() == ingId) {
+                selb = b;
+            }
+
+        }
+        for (Ingredient a : myList) {
+            if (a.getId() == ingId) {
+                sela = a;
+            }
+
+        }
         for (Ingredient e : choseIngredientsList2) {
-            if (e == selected) {
+            if (e.getId() == ingId) {
                 sel = e;
             }
 
         }
+
+        myListCopy.remove(selb);
         choseIngredientsList2.remove(sel);
+        myList.remove(sela);
+
     }
 
     private void sliderProgressChange() {
@@ -470,6 +555,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             glassImage.setImage(image);
             IngredientAddToList(choseIngredientsList2);
             searchField.setDisable(false);
+            mylistButton.setDisable(false);
             brandsList.setDisable(false);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -619,12 +705,16 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             brandsList.setText("Chose cathegory");
             brandsList.setDisable(true);
             searchField.setDisable(true);
+            mylistButton.setDisable(true);
+            mylistButton.setSelected(false);
+            mylistPressed();
             selected = null;
             glass = null;
             alcoholPercent.setProgress(0);
             vBoxChosenIngredients.getChildren().clear();
             for (Ingredient k :addedIngredientsList2){
                 choseIngredientsList2.add(k);
+                myList.add(k);
             }
             addedIngredientsList2.clear();
             slider.setMin(0.0);
@@ -649,6 +739,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
     private void GlasswareAddToList() {
 
         searchField.setDisable(true);
+        mylistButton.setDisable(true);
         vBoxListOfIngredients.getChildren().clear();
         selected = null;
         for (Glassware a : choseGlasswareList) {
@@ -764,6 +855,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 searchField.setText("");
                 vBoxChosenIngredients.getChildren().remove(ingredient);
                 addedIngredientsList2.remove(selected);
+
                 slider.setMin(countVolume());// adding back to volume removed ingredient value
                 slider.setValue(slider.getMin() - setProgress);// adding back to slider removed ingredient value
                 volumeSeparator = volumeSeparator - selected.getMagnitude(); // adding to volume and progress separator
@@ -773,6 +865,7 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 progressSeparator -= a / b;
                 costSeparator = costSeparator - (selected.getPricePerLiter() * selected.getMagnitude() / 1000.00);
                 choseIngredientsList2.add(selected);
+                myList.add(selected);
                 alcoholPercent.setProgress(countPercentage());
 
                 IngredientAddToList(choseIngredientsList2);
@@ -876,9 +969,12 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         }
         stage.setOnCloseRequest(event -> lblHelp.setDisable(false));
     }
+public void tryConnection(){
 
+}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mylistButton.setDisable(true);
         brandsList.setDisable(true);
         searchField.setDisable(true);
         toLowerCase();
@@ -899,9 +995,12 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
         disableAdd();
         try {
             loadIngredientsFromDB();
+            loadIngredientsMyList();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ConnectionLayer.getConnection();
+        System.out.println("USER ID "+Current.environment.currentUser.getId());
     }
 
 

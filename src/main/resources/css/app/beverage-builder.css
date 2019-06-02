@@ -129,14 +129,6 @@
 -fx-font-size: 22;
     -fx-text-fill: #fd6592;
 }
-.radio-button .radio{
-    -fx-fill: white;
--fx-padding: 8;
-}
-.radio-button .dot{
-    -fx-border-width: 3;
-    -fx-padding: 2;
-}
 
 
 /*----------------End of center css--------------------*/
