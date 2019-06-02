@@ -331,16 +331,10 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
                 price_per_litre = resultSet.getInt(4);
                 brand = resultSet.getString(6);
                 BrandsEnum brandEnum = BrandsEnum.fromString(brand);
-
-//            System.out.println(resultSet.getString("id") +
-//                    resultSet.getString("name")+
-//                    resultSet.getString("alcohol")+
-//                    resultSet.getString("price_per_litre"));
-//                System.out.printf("id: %d, name: %s, alcohol: %d, price: %d\n", id, name, alcohol, price_per_litre);
                 Ingredient b = new Ingredient(name, alcohol, price_per_litre / 10, brandEnum, 0);
                 b.setId(id_ing);
                 myList.add(b);
-                System.out.println(b.getName());
+//                System.out.println(b.getName());
             }
         } catch (SQLException ex) {
             System.out.println("Exception: ");
@@ -555,7 +549,9 @@ public class BeverageBuilder extends EventDispatcherAdapter implements Initializ
             glassImage.setImage(image);
             IngredientAddToList(choseIngredientsList2);
             searchField.setDisable(false);
+            if(Current.environment.currentUser instanceof BusinessAccount){
             mylistButton.setDisable(false);
+            }
             brandsList.setDisable(false);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
