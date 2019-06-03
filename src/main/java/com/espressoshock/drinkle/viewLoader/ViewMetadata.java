@@ -11,7 +11,7 @@ public enum ViewMetadata {
 
     APP_INGREDIENT_LIST(IngredientList.class, "/fxml/app/ingredient-list.fxml"),
     APP_BEVERAGE_BUILDER(BeverageBuilder.class, "/fxml/app/beverage-builder/beverage-builder.fxml"),
-    //APP_DASHBOARD(BeverageBuilder.class, "/fxml/app/beverage-builder.fxml"),
+    APP_TEAM_LIST(userView.class, "/fxml/app/user-view.fxml"),
     APP_SIDEBAR(Sidebar.class, "/fxml/app/sidebar.fxml");
 
 
