@@ -296,7 +296,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         if(Current.environment.currentUser instanceof BusinessAccount) {
             try {
                 ingredientID = retrieveIngredientIdFromDB(lblSelectedIngredientName.getText());
-                accountID = retrieveUserIdFromDB();
+                accountID = Current.environment.currentUser.getId();//retrieveUserIdFromDB();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -385,8 +385,8 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         connection.close();
         return ingredient_id;
     }
-
-    private int retrieveUserIdFromDB() throws Exception {
+/** Not need it. replaced with current.environment.currentUser.getId()*/
+/*    private int retrieveUserIdFromDB() throws Exception {
         int user_id = 0;
         String user_email = Current.environment.currentUser.getEmail();
         try {
@@ -405,10 +405,11 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
         }
         connection.close();
         return user_id;
-    }
+    }*/
 
     private void setAccountBeverges()throws Exception{
 
+        accountBeverages.clear();
         int beverages= 0;
         try {
             connection = ConnectionLayer.getConnection();
@@ -431,6 +432,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
     }
 
     private void setAccountIngredients()throws Exception{
+        accountIngredients.clear();
         int ingredients = 0;
         try {
             connection = ConnectionLayer.getConnection();
