@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
@@ -131,6 +132,7 @@
                         <MenuButton fx:id="brandsList" layoutX="3.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" text="Chose cathegory" />
                     </children>
                 </Group>
+            <RadioButton fx:id="mylistButton" layoutX="24.0" layoutY="3.0" mnemonicParsing="false" onAction="#mylistPressed" prefHeight="15.0" prefWidth="88.0" text="Show my list" />
             </children>
         </AnchorPane>
         <Group id="Alc%" layoutX="795.0" layoutY="145.0">
