@@ -249,7 +249,7 @@ public class IngredientList extends EventDispatcherAdapter implements Initializa
 
     private void createSimilarIngredientList(Ingredient selection){
         for (Ingredient x : ingredientsList) {
-            if (selection.getBrand().getProductType().getName().equals(x.getBrand().getProductType().getName())) {
+            if (selection.getBrand().getProductType().getName().equals(x.getBrand().getProductType().getName())&&! selection.getName().equals(x.getName())) {
                 Button button = new Button();
                 button.setOnAction(this::selectVbButton);
                 button.setMinWidth(400);

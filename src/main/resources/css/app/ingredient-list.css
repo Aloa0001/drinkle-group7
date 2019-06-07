@@ -81,11 +81,11 @@
     -fx-tooltip-visible: #tooltipAlcChoice;
 }
 #menuBtnCategory:hover{
-    text-outline: #tooltipCategory;
+    -fx-tooltip-visible:  #tooltipCategory;
 }
 #menuBtnBrand:hover{
-    text-outline: #tooltipBrand;
+    -fx-tooltip-visible:  #tooltipBrand;
 }
 #btnAddIngredient:hover{
-    text-outline: #tooltipAddIngredient;
+    -fx-tooltip-visible:  #tooltipAddIngredient;
 }

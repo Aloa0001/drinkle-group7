@@ -1,0 +1,8 @@
+#btnClose{
+    -fx-background-color: #ef4a00;
+    -fx-border-bottom-color: #ef4a00;
+    -fx-border-radius: 2 2 2 2;
+}
+#btnClose:hover{
+    -fx-tooltip-visible: #tooltipClose;
+}
